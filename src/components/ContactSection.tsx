@@ -69,7 +69,6 @@ export const ContactSection: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-              COLUMNA 1: FORMULARIO DE CONTACTO
           <div className="lg:col-span-7 bg-[#081024] border border-[#2A52BE]/40 rounded-[30px] sm:rounded-[36px] p-6 sm:p-9 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#2A52BE]/25">
               <div>
@@ -222,7 +221,6 @@ export const ContactSection: React.FC = () => {
             )}
           </div>
 
-              COLUMNA 2: APARTADO DIRECTO DE WHATSAPP
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="w-full bg-[#07131B] border-2 border-emerald-500/50 rounded-[30px] sm:rounded-[36px] p-6 sm:p-8 shadow-[0_20px_50px_rgba(16,185,129,0.15)] relative overflow-hidden">
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-[60px] pointer-events-none" />

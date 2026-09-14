@@ -124,7 +124,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
       </div>
 
       <div className="max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8 pb-16">
-            CARD 01: FIESTA NACIONAL DE PLAYAS DORADAS 2026
         <div
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
             openProject === '01'
@@ -265,7 +264,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-            CARD 02: EL CANAL (@elmancasg) WITH RECENT VIDEOS
         <div
           id="canal"
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
@@ -399,7 +397,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
 
                 <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
                   <iframe
-                    src="https://www.youtube.com/embed/videoseries?list=UU3woFJgJr1F8-55tU9Bxz3Q"
+                    src="https://www.youtube.com/embed?listType=user_uploads&list=UC3woFJgJr1F8-55tU9Bxz3Q"
                     title="MIRA NUESTROS ÚLTIMOS VIDEOS - El Manca SG"
                     className="absolute inset-0 w-full h-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -508,7 +506,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-            CARD 03: TRANSFORMACIÓN DIGITAL & SITIOS WEB
         <div
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
             openProject === '03'
@@ -584,7 +581,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               {webProjects.length > 0 && (
                 <div className="relative rounded-3xl overflow-hidden bg-[#060B18] border border-[#2A52BE]/40 p-4 sm:p-6 mb-4">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                        WEBS: placeholder en public/assets/img/placeholder-web.svg.
                     <div className="lg:col-span-8 relative aspect-[16/9] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#02050D] border border-[#2A52BE]/50 shadow-2xl group/web">
                       <SmartImage
                         src={resolveImage(webProjects[webIndex].thumbnail, PLACEHOLDERS.web)}
@@ -707,12 +703,22 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
 
             <div className="w-full h-full">
               <iframe
-                src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&rel=0`}
                 title="Reproductor de Streaming Manca"
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
+              <a
+                href={`https://www.youtube.com/watch?v=${activeVideoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/80 hover:bg-[#2A52BE] border border-white/20 text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-colors whitespace-nowrap"
+              >
+                <Youtube className="w-3.5 h-3.5 text-red-500" />
+                <span>Si no se reproduce, abrílo en YouTube</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
         </div>

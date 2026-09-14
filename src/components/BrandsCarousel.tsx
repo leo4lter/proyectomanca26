@@ -37,15 +37,14 @@ export const BrandsCarousel: React.FC = () => {
           {tripledLogos.map((brand, idx) => (
             <div
               key={`${brand.id}-${idx}`}
-              className="group relative flex flex-col items-center justify-center w-[180px] sm:w-[220px] h-[95px] sm:h-[115px] px-6 py-4 rounded-2xl bg-[#060B18] border border-white/10 transition-all duration-300 hover:scale-105 hover:z-30 hover:border-[#3870E0] hover:bg-[#0A1636] hover:shadow-[0_0_35px_rgba(59,130,246,0.7)] cursor-pointer"
+              className="group relative flex flex-col items-center justify-center w-[180px] sm:w-[220px] h-[95px] sm:h-[115px] px-6 py-4 rounded-2xl bg-[#060B18] border border-white/10 transition-all duration-400 hover:scale-110 hover:z-30 hover:border-[#3870E0] hover:bg-[#0A1636] hover:shadow-[0_0_40px_rgba(59,130,246,0.85)] cursor-pointer"
             >
-                  LOGOS DE MARCAS: placeholder en public/assets/img/placeholder-marca.svg.
               <div className="w-full h-full flex items-center justify-center overflow-visible">
                 <SmartImage
                   src={resolveImage(brand.logo, PLACEHOLDERS.marca)}
                   fallbackSrc={PLACEHOLDERS.marca}
                   alt={brand.name}
-                  className="max-h-[50px] sm:max-h-[62px] max-w-[135px] sm:max-w-[165px] object-contain filter grayscale opacity-45 transition-all duration-300 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.95)]"
+                  className="max-h-[50px] sm:max-h-[62px] max-w-[135px] sm:max-w-[165px] object-contain filter grayscale opacity-45 transition-all duration-400 group-hover:filter-none group-hover:opacity-100 group-hover:scale-125 group-hover:drop-shadow-[0_0_25px_rgba(59,130,246,1)]"
                 />
               </div>
 
