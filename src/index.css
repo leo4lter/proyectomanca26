@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #060A14;
+    color: #F8FAFC;
+    font-family: 'Kanit', sans-serif;
+  }
+
+  body {
+    background-color: #060A14;
+    color: #F8FAFC;
+    font-family: 'Kanit', sans-serif;
+    overflow-x: clip;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    background-color: #060A14;
+    min-height: 100vh;
+    overflow-x: clip;
+  }
+}
+
+/* Hero Heading with White-to-Electric Blue gradient */
+.hero-heading {
+  background: linear-gradient(180deg, #FFFFFF 0%, #D0E1FD 45%, #2A52BE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-heading-glow {
+  text-shadow: 0 0 35px rgba(42, 82, 190, 0.45);
+}
+
+.electric-blue-text {
+  color: #2A52BE;
+}
+
+.electric-blue-glow {
+  text-shadow: 0 0 20px rgba(42, 82, 190, 0.65);
+}
+
+/* Custom scrollbar with brand colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060A14;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A284A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A52BE;
+}
+
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-33.3333%)}}
+.animate-marquee{animation:marqueeScroll 38s linear infinite}
+.marquee-paused,.marquee-paused .animate-marquee{animation-play-state:paused !important}
+@keyframes projIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.proj-panel{overflow:hidden;display:grid;grid-template-rows:0fr;opacity:0;transform:scale(.985);transition:grid-template-rows .55s cubic-bezier(.22,.9,.28,1),opacity .45s ease,transform .55s cubic-bezier(.22,.9,.28,1)}
+.proj-panel.open{grid-template-rows:1fr;opacity:1;transform:scale(1)}
+.proj-panel-inner{min-height:0;overflow:hidden}
+.proj-content{animation:projIn .5s ease both}
+@media (prefers-reduced-motion:reduce){.animate-marquee,.proj-panel,.proj-content{animation:none !important;transition:none !important}}

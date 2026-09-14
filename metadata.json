@@ -1,0 +1,6 @@
+{
+  "name": "Manca -- Productora Audiovisual & Agencia Digital",
+  "description": "Somos Manca: productora audiovisual y agencia digital 360 arraigada en la comunidad. Streaming profesional, impacto comunitario, diseño web integral y publicidad audiovisual.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

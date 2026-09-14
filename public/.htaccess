@@ -1,0 +1,19 @@
+# Manca Productora — Configuración del servidor (Hostinger / LiteSpeed)
+# Permite entrar al panel de administración también desde https://tudominio.com/admin
+# (la app React lo detecta y muestra el panel; sin este archivo Apache responde 404).
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # La carpeta /admin no existe físicamente: todo lo que empiece con /admin
+  # se sirve con index.html y la app decide qué mostrar.
+  RewriteRule ^admin(/.*)?$ /index.html [L,QSA]
+</IfModule>
+
+# Permisos CORS para el panel de administración
+<IfModule mod_headers.c>
+  Header always set Access-Control-Allow-Origin "*"
+  Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+  Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+</IfModule>
