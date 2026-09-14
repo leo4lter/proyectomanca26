@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Send, CheckCircle2, MessageCircle, Sparkles, Clock, MapPin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, Send, CircleCheck as CheckCircle2, MessageCircle, Sparkles, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { useSiteContent } from '../context/SiteContentContext';
 import { FadeIn } from './FadeIn';
 
@@ -46,15 +46,12 @@ export const ContactSection: React.FC = () => {
       className="relative w-full bg-[#050914] text-white px-5 sm:px-8 md:px-12 py-24 sm:py-32 border-t border-[#2A52BE]/30 overflow-hidden"
       style={{ fontFamily: "'Kanit', sans-serif" }}
     >
-      {/* Invisible anchor for backward compatibility */}
       <span id="contact" className="sr-only" />
 
-      {/* Atmospheric glow effects */}
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[350px] bg-[#2A52BE]/12 blur-[130px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 right-10 w-[450px] h-[300px] bg-emerald-600/10 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
           <FadeIn delay={0} y={20}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111F4A] border border-[#2A52BE]/40 text-xs tracking-widest uppercase text-[#93C5FD] mb-4 font-semibold shadow-[0_0_20px_rgba(42,82,190,0.3)]">
@@ -71,11 +68,8 @@ export const ContactSection: React.FC = () => {
           </FadeIn>
         </div>
 
-        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          {/* ========================================================
               COLUMNA 1: FORMULARIO DE CONTACTO
-             ======================================================== */}
           <div className="lg:col-span-7 bg-[#081024] border border-[#2A52BE]/40 rounded-[30px] sm:rounded-[36px] p-6 sm:p-9 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#2A52BE]/25">
               <div>
@@ -125,7 +119,6 @@ export const ContactSection: React.FC = () => {
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Nombre */}
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="contact-name" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                       Nombre o Comercio *
@@ -141,7 +134,6 @@ export const ContactSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* Teléfono / WhatsApp */}
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="contact-phone" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                       Teléfono / WhatsApp *
@@ -158,7 +150,6 @@ export const ContactSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Email */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="contact-email" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                     Correo Electrónico *
@@ -174,7 +165,6 @@ export const ContactSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Tipo de Servicio */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="contact-service" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                     Servicio o Interés Principal
@@ -206,7 +196,6 @@ export const ContactSection: React.FC = () => {
                   </select>
                 </div>
 
-                {/* Mensaje */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="contact-message" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                     Mensaje / Detalle de la Idea *
@@ -222,7 +211,6 @@ export const ContactSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Botón de Enviar */}
                 <button
                   type="submit"
                   className="w-full mt-2 py-4 rounded-full bg-gradient-to-r from-[#2A52BE] to-[#3870E0] hover:from-[#1E3A8A] hover:to-[#2A52BE] text-white font-bold text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_25px_rgba(42,82,190,0.5)] hover:shadow-[0_0_35px_rgba(42,82,190,0.8)] active:scale-[0.99] flex items-center justify-center gap-2.5 cursor-pointer"
@@ -234,11 +222,8 @@ export const ContactSection: React.FC = () => {
             )}
           </div>
 
-          {/* ========================================================
               COLUMNA 2: APARTADO DIRECTO DE WHATSAPP
-             ======================================================== */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            {/* Card Principal WhatsApp */}
             <div className="w-full bg-[#07131B] border-2 border-emerald-500/50 rounded-[30px] sm:rounded-[36px] p-6 sm:p-8 shadow-[0_20px_50px_rgba(16,185,129,0.15)] relative overflow-hidden">
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-[60px] pointer-events-none" />
 
@@ -259,7 +244,6 @@ export const ContactSection: React.FC = () => {
                 Contactate al instante con Leo y el equipo de producción de Manca. Respondemos en minutos cualquier duda sobre streaming, eventos o desarrollo web.
               </p>
 
-              {/* Botón Principal WhatsApp */}
               <a
                 href={generateWhatsAppUrl('¡Hola Manca! Me comunico desde el sitio web para hacer una consulta.')}
                 target="_blank"
@@ -280,7 +264,6 @@ export const ContactSection: React.FC = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
 
-              {/* Accesos rápidos pre-cargados */}
               <div className="mt-6 pt-5 border-t border-emerald-500/20">
                 <span className="text-[11px] uppercase tracking-wider text-emerald-400/90 font-bold block mb-3">
                   Elegí tu consulta y abrí el chat directo:
@@ -325,7 +308,6 @@ export const ContactSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Datos de contacto oficiales */}
             <div className="w-full bg-[#081024] border border-[#2A52BE]/30 rounded-[28px] p-5 sm:p-6 text-xs text-[#94A3B8] flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-[#60A5FA] shrink-0" />

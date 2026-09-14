@@ -21,12 +21,10 @@ function MainApp() {
   const handleOpenContact = () => setIsContactOpen(true);
   const handleCloseContact = () => setIsContactOpen(false);
 
-  // If URL is /admin or #admin, render the private Admin Dashboard
   if (isAdminRoute) {
     return <AdminDashboard />;
   }
 
-  // Otherwise, render the 100% clean public spectator experience
   return (
     <div
       id="main-wrapper"
@@ -41,28 +39,20 @@ function MainApp() {
       <MarqueeSection />
       <AboutSection onOpenContact={handleOpenContact} />
 
-      {/* 4. SERVICES SECTION - PILARES FUNDAMENTALES */}
       <ServicesSection />
 
-      {/* 5. BRANDS CAROUSEL (Debajo de Servicios: logos B&N con iluminación al hover) */}
       <BrandsCarousel />
 
-      {/* 6. PRICING SECTION - PLANES & PATROCINIO */}
       <PricingSection onOpenContact={handleOpenContact} />
 
-      {/* 7. PROJECTS SECTION (Fiesta Nacional Playas Doradas en directo, El Canal @elmancasg, y Webs con carrusel GIF/PNG) */}
       <ProjectsSection onOpenContact={handleOpenContact} />
 
-      {/* 8. CONTACT SECTION (Formulario Web Completo + Apartado Exclusivo WhatsApp) */}
       <ContactSection />
 
-      {/* 9. BRAND FOOTER (Logo de la marca, links y copyright) */}
       <Footer onOpenContact={handleOpenContact} />
 
-      {/* Interactive Contact Modal */}
       <ContactModal isOpen={isContactOpen} onClose={handleCloseContact} />
 
-      {/* Floating Action Buttons: Scroll to Top (icon only) & Direct Contact */}
       <FloatingActions onOpenContactModal={handleOpenContact} />
     </div>
   );

@@ -8,7 +8,6 @@ import { Phone, Mail } from 'lucide-react';
 
 export const Footer: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact }) => {
   const { customIconUrl, customFooterLogoUrl } = useSiteContent();
-  // LOGO FOOTER: se muestra public/assets/img/logo-footer.svg por defecto.
   const footerLogo = resolveImage(customFooterLogoUrl, PLACEHOLDERS.logoFooter);
   const iconLogo = resolveImage(customIconUrl, PLACEHOLDERS.logo);
 
@@ -42,7 +41,6 @@ export const Footer: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                {/* Si borrás logo-footer.svg e icon-web.svg, se usa el vector interno */}
                 <SmartImage
                   src={PLACEHOLDERS.logo}
                   fallbackSrc={PLACEHOLDERS.logo}
@@ -62,7 +60,6 @@ export const Footer: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact
             El puente entre las historias locales y la transformación digital de nuestros comercios y eventos.
           </p>
 
-          {/* Official Contact Details */}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 mt-4 text-xs">
             <a
               href="https://wa.me/5492920214741?text=Hola%20Manca%2C%20quisiera%20hacer%20una%20consulta"
@@ -92,7 +89,6 @@ export const Footer: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact
         </div>
       </div>
 
-      {/* Discreet Copyright */}
       <div className="max-w-6xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-[#64748B] gap-3">
         <p>© 2026 Manca • Todos los derechos reservados.</p>
         <p className="text-[11px] text-[#475569]">#ConectandoPersonas</p>

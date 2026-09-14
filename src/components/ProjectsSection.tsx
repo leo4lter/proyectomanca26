@@ -26,18 +26,14 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
 }) => {
   const { webProjects, channelVideos, customIconUrl, customFooterLogoUrl, festivalNights, siteTexts } = useSiteContent();
 
-  // Active video modal state for playing directly
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const videoCloseButtonRef = useRef<HTMLButtonElement>(null);
   const videoTriggerRef = useRef<HTMLButtonElement | null>(null);
 
-  // Web carousel active index
   const [webIndex, setWebIndex] = useState(0);
 
-  // Expandable/collapsible project cards (toggles support both click and mouse hover)
   const [openProject, setOpenProject] = useState<string | null>('01');
 
-  // Toggle for showing more channel videos
   const [showAllVideos, setShowAllVideos] = useState(false);
 
   useEffect(() => {
@@ -102,10 +98,8 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
       className="relative z-10 w-full bg-[#060A14] pt-24 sm:pt-32 pb-24 px-4 sm:px-8 md:px-12 overflow-hidden border-t border-[#2A52BE]/20"
     >
       <span id="projects" className="sr-only" />
-      {/* Glow aura */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#2A52BE]/10 blur-[140px] pointer-events-none rounded-full" />
 
-      {/* Heading */}
       <div className="max-w-6xl mx-auto mb-16 sm:mb-24 text-center">
         <FadeIn delay={0} y={20}>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111D42]/80 border border-[#2A52BE]/40 text-xs tracking-widest uppercase text-[#93C5FD] mb-4">
@@ -129,11 +123,8 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
         </FadeIn>
       </div>
 
-      {/* Interactive Accordion / Toggle Projects Container */}
       <div className="max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8 pb-16">
-        {/* ========================================================
             CARD 01: FIESTA NACIONAL DE PLAYAS DORADAS 2026
-           ======================================================== */}
         <div
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
             openProject === '01'
@@ -141,7 +132,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               : 'border-[#2A52BE]/30 bg-[#070D1B] hover:border-[#2A52BE]/70'
           } p-5 sm:p-7 md:p-9`}
         >
-          {/* Header & Toggle Button */}
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <button
               id="project-toggle-01"
@@ -173,7 +163,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               </div>
             </button>
 
-            {/* Badges & Interactive Toggle Pill */}
             <div className="flex flex-wrap items-center gap-3 self-end lg:self-auto">
               <span className="hidden sm:inline-flex px-3 py-1.5 rounded-full bg-red-600/20 border border-red-500/40 text-red-400 text-xs font-semibold uppercase tracking-wider items-center gap-1.5">
                 <Youtube className="w-4 h-4 text-red-500" />
@@ -201,8 +190,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-          {/* Collapsible Content */}
-          {/* Panel 01 */}
           <div id="project-panel-01" role="region" aria-labelledby="project-toggle-01" aria-hidden={openProject !== '01'} className={`proj-panel ${openProject === '01' ? 'open' : ''}`}>
             <div className="proj-panel-inner">
             <div className={`proj-content pt-6 mt-6 border-t border-[#2A52BE]/30 ${openProject === '01' ? '' : 'pointer-events-none'}`} style={openProject === '01' ? undefined : {visibility: 'hidden' as const}}>
@@ -210,14 +197,12 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 Transmisión de gran escala en directo para miles de espectadores. Mirá las 3 transmisiones completas con audio de consola y cámaras en escenario.
               </p>
 
-              {/* THE 3 EXACT DIRECT THUMBNAILS GRID */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                 {playasDoradasNights.map((nightItem) => (
                   <div
                     key={nightItem.night}
                     className="group relative rounded-2xl overflow-hidden bg-[#040812] border-2 border-[#2A52BE]/30 hover:border-[#3870E0] shadow-lg transition-all duration-300 flex flex-col"
                   >
-                    {/* Thumbnail with overlay (miniatura YouTube con fallback local) */}
                     <div className="relative aspect-video w-full overflow-hidden bg-black">
                       <SmartImage
                         src={resolveImage(nightItem.thumbnail, PLACEHOLDERS.galeria)}
@@ -237,14 +222,12 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                         </button>
                       </div>
 
-                      {/* Night Pill */}
                       <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/80 border border-white/20 backdrop-blur-md">
                         <span className="text-[11px] font-bold tracking-wider text-white uppercase">
                           {nightItem.night}
                         </span>
                       </div>
 
-                      {/* Live indicator */}
                       <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-red-600/90 flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
                         <span className="text-[9px] font-bold text-white uppercase tracking-wider">
@@ -253,7 +236,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                       </div>
                     </div>
 
-                    {/* Info Footer */}
                     <div className="p-4 flex-1 flex flex-col justify-between bg-[#081126]">
                       <div>
                         <span className="text-[10px] text-[#60A5FA] uppercase tracking-wider font-semibold block">
@@ -283,9 +265,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-        {/* ========================================================
             CARD 02: EL CANAL (@elmancasg) WITH RECENT VIDEOS
-           ======================================================== */}
         <div
           id="canal"
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
@@ -294,7 +274,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               : 'border-[#2A52BE]/30 bg-[#070D1B] hover:border-[#2A52BE]/70'
           } p-5 sm:p-7 md:p-9`}
         >
-          {/* Header & Toggle Button */}
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <button
               id="project-toggle-02"
@@ -326,7 +305,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               </div>
             </button>
 
-            {/* Badges & Interactive Toggle Pill */}
             <div className="flex flex-wrap items-center gap-3 self-end lg:self-auto">
               <a
                 href="https://www.youtube.com/@elmancasg"
@@ -359,12 +337,9 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-          {/* Collapsible Content */}
-          {/* Panel 02 */}
           <div id="project-panel-02" role="region" aria-labelledby="project-toggle-02" aria-hidden={openProject !== '02'} className={`proj-panel ${openProject === '02' ? 'open' : ''}`}>
             <div className="proj-panel-inner">
             <div className={`proj-content pt-6 mt-6 border-t border-[#2A52BE]/30 ${openProject === '02' ? '' : 'pointer-events-none'}`} style={openProject === '02' ? undefined : {visibility: 'hidden' as const}}>
-              {/* YouTube Channel Hero Card */}
               <div className="mb-6 p-4 sm:p-6 rounded-2xl bg-[#091122] border border-red-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-[0_10px_30px_rgba(239,68,68,0.12)]">
                 <div className="flex items-center gap-3.5 sm:gap-4">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg shrink-0">
@@ -414,7 +389,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 Creamos contenido propio que le da voz a deportes, eventos y personas que normalmente no tienen visibilidad. Un compromiso social que inspira a los niños y jóvenes de Sierra Grande y la región como verdaderos referentes.
               </p>
 
-              {/* Reproductor de Últimas Subidas (IFrame Responsivo Lista UU) */}
               <div className="mb-8 p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-[#081022] border border-[#2A52BE]/30 shadow-[0_15px_40px_rgba(0,0,0,0.45)]">
                 <div className="flex items-center gap-2.5 mb-3.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
@@ -423,7 +397,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                   </h4>
                 </div>
 
-                {/* Contenedor IFrame Responsivo con bordes redondeados y sombra sutil */}
                 <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
                   <iframe
                     src="https://www.youtube.com/embed/videoseries?list=UU3woFJgJr1F8-55tU9Bxz3Q"
@@ -436,7 +409,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 </div>
               </div>
 
-              {/* Grid de los últimos videos reales del canal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                 {channelVideos.slice(0, showAllVideos ? channelVideos.length : 6).map((vid) => (
                   <div
@@ -444,7 +416,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                     className="group/item rounded-2xl overflow-hidden bg-[#070E20] border border-[#2A52BE]/30 hover:border-[#3870E0] transition-all flex flex-col shadow-md"
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-black">
-                      {/* Miniatura YouTube con fallback local */}
                       <SmartImage
                         src={resolveImage(vid.thumbnail, PLACEHOLDERS.galeria)}
                         fallbackSrc={PLACEHOLDERS.galeria}
@@ -504,7 +475,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 ))}
               </div>
 
-              {/* Botón para ver más o menos videos si hay más de 6 */}
               {channelVideos.length > 6 && (
                 <div className="flex justify-center mb-6">
                   <button
@@ -518,7 +488,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 </div>
               )}
 
-              {/* Bottom Channel Banner Link */}
               <div className="p-4 rounded-xl bg-[#091122] border border-[#2A52BE]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#CBD5E1]">
                 <div className="flex items-center gap-2 text-center sm:text-left">
                   <Youtube className="w-4 h-4 text-red-500 shrink-0" />
@@ -539,9 +508,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-        {/* ========================================================
             CARD 03: TRANSFORMACIÓN DIGITAL & SITIOS WEB
-           ======================================================== */}
         <div
           className={`w-full rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border-2 transition-all duration-300 ${
             openProject === '03'
@@ -549,7 +516,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               : 'border-[#2A52BE]/30 bg-[#070D1B] hover:border-[#2A52BE]/70'
           } p-5 sm:p-7 md:p-9`}
         >
-          {/* Header & Toggle Button */}
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <button
               id="project-toggle-03"
@@ -581,7 +547,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               </div>
             </button>
 
-            {/* Badges & Interactive Toggle Pill */}
             <div className="flex flex-wrap items-center gap-3 self-end lg:self-auto">
               <span className="hidden sm:inline-flex px-3 py-1.5 rounded-full bg-[#162A60] border border-[#2A52BE]/50 text-[#93C5FD] text-xs font-semibold uppercase tracking-wider items-center gap-1.5">
                 <Globe className="w-4 h-4 text-[#3B82F6]" />
@@ -609,8 +574,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             </div>
           </div>
 
-          {/* Collapsible Content */}
-          {/* Panel 03 */}
           <div id="project-panel-03" role="region" aria-labelledby="project-toggle-03" aria-hidden={openProject !== '03'} className={`proj-panel ${openProject === '03' ? 'open' : ''}`}>
             <div className="proj-panel-inner">
             <div className={`proj-content pt-6 mt-6 border-t border-[#2A52BE]/30 ${openProject === '03' ? '' : 'pointer-events-none'}`} style={openProject === '03' ? undefined : {visibility: 'hidden' as const}}>
@@ -618,13 +581,10 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 Diseños web llave en mano para comerciantes y empresas. Cada proyecto incluye hosting de alta velocidad, dominio propio y webmail corporativo con 1 año de mantenimiento preventivo.
               </p>
 
-              {/* INTERACTIVE CAROUSEL OF DEVELOPED WEBS */}
               {webProjects.length > 0 && (
                 <div className="relative rounded-3xl overflow-hidden bg-[#060B18] border border-[#2A52BE]/40 p-4 sm:p-6 mb-4">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                    {/* Web Preview (Thumbnail PNG o GIF).
                         WEBS: placeholder en public/assets/img/placeholder-web.svg.
-                        Subí capturas desde el Admin (pestaña Webs). */}
                     <div className="lg:col-span-8 relative aspect-[16/9] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#02050D] border border-[#2A52BE]/50 shadow-2xl group/web">
                       <SmartImage
                         src={resolveImage(webProjects[webIndex].thumbnail, PLACEHOLDERS.web)}
@@ -633,7 +593,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                         className="w-full h-full object-cover transition-transform duration-500 group-hover/web:scale-105"
                       />
 
-                      {/* Pill with client and format */}
                       <div className="absolute top-3 left-3 right-3 flex flex-wrap items-start gap-2">
                         <span className="max-w-full truncate px-3 py-1 rounded-full bg-black/80 border border-white/20 text-xs font-semibold text-white tracking-wider uppercase backdrop-blur-md">
                           {webProjects[webIndex].client}
@@ -643,7 +602,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                         </span>
                       </div>
 
-                      {/* Bottom live button */}
                       {hasLiveUrl(webProjects[webIndex].liveUrl) && (
                         <div className="absolute bottom-3 right-3">
                           <a
@@ -664,7 +622,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                       )}
                     </div>
 
-                    {/* Web Information & Carousel Navigation */}
                     <div className="lg:col-span-4 flex flex-col justify-between h-full py-2">
                       <div>
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#122045] border border-[#2A52BE]/40 text-xs font-semibold uppercase tracking-wider text-[#93C5FD] mb-3">
@@ -686,7 +643,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                         </p>
                       </div>
 
-                      {/* Navigation arrows and indicators */}
                       <div className="flex items-center justify-between pt-4 border-t border-white/10">
                         <div className="flex items-center gap-1.5">
                           {webProjects.map((_, i) => (
@@ -735,7 +691,6 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
           </div>
       </div>
 
-      {/* Video Modal Player (Playas Doradas or Channel) */}
       {activeVideoId && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) closeVideo(); }}>
           <div role="dialog" aria-modal="true" aria-label="Reproductor de video" className="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden bg-black border-2 border-[#2A52BE] shadow-[0_0_80px_rgba(42,82,190,0.8)]">

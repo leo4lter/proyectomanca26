@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, Mail, Send, CheckCircle2, Sparkles, Phone, MessageSquare, Clock, MessageCircle } from 'lucide-react';
+import { X, Mail, Send, CircleCheck as CheckCircle2, Sparkles, Phone, MessageSquare, Clock, MessageCircle } from 'lucide-react';
 import { MancaCircularIcon } from './MancaBrand';
 
 interface ContactModalProps {
@@ -62,7 +62,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         className="relative w-full max-w-xl bg-[#081024] border-2 border-[#2A52BE]/60 rounded-[32px] sm:rounded-[40px] p-6 sm:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.95)] text-white"
         style={{ fontFamily: "'Kanit', sans-serif" }}
       >
-        {/* Close Button */}
         <button
           ref={closeButtonRef}
           type="button"
@@ -99,7 +98,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 Contanos tu evento, negocio, comercio o idea. Te responderemos con una propuesta a tu medida.
               </p>
 
-              {/* Direct WhatsApp Call-to-Action */}
               <div className="mt-4 p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
@@ -142,7 +140,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Name */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="modal-contact-name" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                     Nombre / Empresa
@@ -158,7 +155,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   />
                 </div>
 
-                {/* Phone / WhatsApp */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="modal-contact-phone" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                     Teléfono / WhatsApp
@@ -175,7 +171,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 </div>
               </div>
 
-              {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="modal-contact-email" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                   Correo Electrónico
@@ -191,7 +186,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 />
               </div>
 
-              {/* Service Selection */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="modal-contact-service" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                   Interés o Servicio Principal
@@ -223,7 +217,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 </select>
               </div>
 
-              {/* Message */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="modal-contact-message" className="text-xs uppercase tracking-wider text-[#93C5FD] font-medium">
                   Detalles del Proyecto o Consulta

@@ -1,22 +1,7 @@
 import React, { useState } from 'react';
 import { useSiteContent } from '../context/SiteContentContext';
 import { SiteTexts } from '../types';
-import {
-  Type,
-  FileText,
-  Sparkles,
-  RotateCcw,
-  Check,
-  HelpCircle,
-  Smartphone,
-  Mail,
-  MapPin,
-  Clock,
-  Compass,
-  Layers,
-  Phone,
-  Radio,
-} from 'lucide-react';
+import { Type, FileText, Sparkles, RotateCcw, Check, Circle as HelpCircle, Smartphone, Mail, MapPin, Clock, Compass, Layers, Phone, Radio } from 'lucide-react';
 
 export const AdminTextsTab: React.FC = () => {
   const { siteTexts, updateSiteText, resetSiteTexts } = useSiteContent();
@@ -31,7 +16,6 @@ export const AdminTextsTab: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Intro Header */}
       <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -60,7 +44,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
         </div>
 
-        {/* Section Filter Pills */}
         <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-[#2A52BE]/20">
           <span className="text-xs text-[#94A3B8] self-center mr-1">Filtrar por sección:</span>
           {[
@@ -87,7 +70,6 @@ export const AdminTextsTab: React.FC = () => {
         </div>
       </div>
 
-      {/* 1. SECCIÓN HERO / PORTADA */}
       {(activeSection === 'all' || activeSection === 'hero') && (
         <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#2A52BE]/30">
@@ -105,7 +87,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Slogan */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center justify-between">
                 <span>Eslogan / Etiqueta Superior</span>
@@ -120,7 +101,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Headline */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center justify-between">
                 <span>Título Principal</span>
@@ -135,7 +115,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Description */}
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center justify-between">
                 <span>Descripción Narrativa</span>
@@ -150,7 +129,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* CTA Button */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center justify-between">
                 <span>Texto del Botón de Contacto</span>
@@ -168,7 +146,6 @@ export const AdminTextsTab: React.FC = () => {
         </div>
       )}
 
-      {/* 2. SECCIÓN NUESTRA ESENCIA / SOBRE NOSOTROS */}
       {(activeSection === 'all' || activeSection === 'about') && (
         <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#2A52BE]/30">
@@ -186,7 +163,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Badge */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Etiqueta / Badge Superior
@@ -200,7 +176,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Heading */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Título Grande
@@ -214,7 +189,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Bio */}
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center justify-between">
                 <span>Biografía Narrativa (Texto Animado por Scroll)</span>
@@ -229,7 +203,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Button */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Texto del Botón
@@ -246,7 +219,6 @@ export const AdminTextsTab: React.FC = () => {
         </div>
       )}
 
-      {/* 3. SECCIÓN SERVICIOS */}
       {(activeSection === 'all' || activeSection === 'services') && (
         <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#2A52BE]/30">
@@ -264,7 +236,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Services Badge */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Etiqueta / Badge Superior
@@ -278,7 +249,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Services Heading */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Título Grande
@@ -292,7 +262,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Services Subtitle */}
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Subtítulo Descriptivo
@@ -309,7 +278,6 @@ export const AdminTextsTab: React.FC = () => {
         </div>
       )}
 
-      {/* 4. SECCIÓN PROYECTOS & EL CANAL */}
       {(activeSection === 'all' || activeSection === 'projects') && (
         <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#2A52BE]/30">
@@ -327,7 +295,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Projects Badge */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Etiqueta / Badge Superior
@@ -341,7 +308,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Projects Heading */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Título Grande
@@ -355,7 +321,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Projects Subtitle */}
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Subtítulo Descriptivo
@@ -372,7 +337,6 @@ export const AdminTextsTab: React.FC = () => {
         </div>
       )}
 
-      {/* 5. SECCIÓN CONTACTO & DATOS OFICIALES */}
       {(activeSection === 'all' || activeSection === 'contact') && (
         <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#2A52BE]/30">
@@ -390,7 +354,6 @@ export const AdminTextsTab: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Contact Badge */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Etiqueta / Badge Superior
@@ -404,7 +367,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Contact Heading */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Título Grande
@@ -418,7 +380,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Contact Description */}
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold">
                 Descripción del Formulario
@@ -432,7 +393,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* WhatsApp Phone */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
                 <Smartphone className="w-3.5 h-3.5" />
@@ -450,7 +410,6 @@ export const AdminTextsTab: React.FC = () => {
               </span>
             </div>
 
-            {/* Email */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5" />
@@ -465,7 +424,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Location */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5" />
@@ -480,7 +438,6 @@ export const AdminTextsTab: React.FC = () => {
               />
             </div>
 
-            {/* Schedule */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />

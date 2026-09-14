@@ -49,7 +49,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
       aria-label="Acciones de navegación y contacto"
       className="fixed bottom-6 right-5 sm:right-7 z-40 flex flex-col items-end gap-3 pointer-events-none"
     >
-      {/* Quick Contact Card (expandable popup on click/hover) */}
       {showContactCard && (
         <div
           role="region"
@@ -74,7 +73,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
           </div>
 
           <div className="space-y-2.5">
-            {/* WhatsApp / Phone Row */}
             <a
               href={whatsappUrl}
               target="_blank"
@@ -109,7 +107,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
               </button>
             </a>
 
-            {/* Email Row */}
             <a
               href={`mailto:${emailAddress}?subject=Consulta%20desde%20la%20web%20Manca`}
               className="group flex items-center justify-between p-2.5 rounded-xl bg-[#0C1738] hover:bg-[#14265E] border border-[#2A52BE]/40 transition-all cursor-pointer"
@@ -150,7 +147,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
       )}
 
       <div className="flex items-center gap-2.5 pointer-events-auto">
-        {/* Scroll To Top Button: ICON ONLY, absolutely NO text */}
         <button
           type="button"
           id="scroll-to-top-button"
@@ -166,7 +162,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
           <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform stroke-[2.5]" />
         </button>
 
-        {/* Floating Contact Button: Directly redirects to the user's phone number on click, and has an option to show the quick contact card with email */}
         <div className="relative group/contact">
           <a
             id="floating-contact-button"
@@ -176,7 +171,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
             aria-label={`Contactar por WhatsApp a ${phoneNumber}`}
             className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-[#162B75] via-[#2A52BE] to-[#3870E0] hover:from-[#1D3B9C] hover:to-[#4A85F6] text-white flex items-center justify-center shadow-[0_8px_30px_rgba(42,82,190,0.7)] hover:shadow-[0_0_35px_rgba(42,82,190,1)] border-2 border-white/30 hover:border-white transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer relative"
           >
-            {/* Active status pulsating dot */}
             <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border border-[#081024]" />
@@ -185,7 +179,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = () => {
             <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2]" />
           </a>
 
-          {/* Mini toggle button to view email & details card */}
           <button
             type="button"
             onClick={(e) => {

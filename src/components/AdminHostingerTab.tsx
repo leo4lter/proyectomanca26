@@ -1,22 +1,6 @@
 import React, { useState } from 'react';
 import { useSiteContent } from '../context/SiteContentContext';
-import {
-  Server,
-  Upload,
-  Download,
-  CheckCircle2,
-  AlertCircle,
-  RefreshCw,
-  Copy,
-  ExternalLink,
-  HardDrive,
-  FileCode,
-  FolderPlus,
-  ShieldCheck,
-  Sparkles,
-  ArrowRight,
-  Image as ImageIcon,
-} from 'lucide-react';
+import { Server, Upload, Download, CircleCheck as CheckCircle2, CircleAlert as AlertCircle, RefreshCw, Copy, ExternalLink, HardDrive, FileCode, FolderPlus, ShieldCheck, Sparkles, ArrowRight, Image as ImageIcon } from 'lucide-react';
 
 export const AdminHostingerTab: React.FC = () => {
   const {
@@ -51,7 +35,6 @@ export const AdminHostingerTab: React.FC = () => {
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [imageName, setImageName] = useState('imagen-manca');
 
-  // Handle URL Save & Test
   const handleSaveAndTest = async () => {
     setHostingerUrl(inputUrl);
     setTesting(true);
@@ -69,7 +52,6 @@ export const AdminHostingerTab: React.FC = () => {
     }
   };
 
-  // Sync entire site state
   const handleSyncSite = async () => {
     setSyncing(true);
     setSyncResult(null);
@@ -86,7 +68,6 @@ export const AdminHostingerTab: React.FC = () => {
     }
   };
 
-  // Upload image to Hostinger
   const handleDirectImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -109,7 +90,6 @@ export const AdminHostingerTab: React.FC = () => {
     setTimeout(() => setCopiedUrl(false), 3000);
   };
 
-  // Download PHP files directly
   const downloadFile = (filename: string, content: string, type = 'text/plain') => {
     const blob = new Blob([content], { type });
     const url = URL.createObjectURL(blob);
@@ -127,7 +107,6 @@ export const AdminHostingerTab: React.FC = () => {
       .then((res) => res.text())
       .then((txt) => downloadFile('content.php', txt, 'application/x-php'))
       .catch(() => {
-        // Fallback php content
         const fallback = `<?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
@@ -178,7 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      {/* Status Hero Card */}
       <div
         id="hostinger-status-card"
         className="rounded-3xl bg-gradient-to-r from-[#0C1A38] via-[#0E204A] to-[#0A1633] border border-[#2A52BE]/40 p-6 sm:p-8 relative overflow-hidden shadow-2xl shadow-blue-950/40"
@@ -256,9 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )}
       </div>
 
-      {/* Grid: 1. Hostinger Connection Config & Test | 2. Direct Image Uploader */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Panel 1: Configurar & Probar Dominio */}
         <div className="bg-[#081229] border border-[#2A52BE]/30 rounded-2xl p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 text-white font-bold text-base uppercase tracking-wider mb-2">
@@ -334,7 +310,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
-        {/* Panel 2: Subidor Directo de Imágenes a Hostinger */}
         <div className="bg-[#081229] border border-[#2A52BE]/30 rounded-2xl p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 text-white font-bold text-base uppercase tracking-wider mb-2">
@@ -451,7 +426,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       </div>
 
-      {/* Descarga del Kit de Archivos Hostinger */}
       <div className="bg-[#081229] border border-[#2A52BE]/30 rounded-2xl p-6">
         <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
           <div className="flex items-center gap-2.5">
@@ -512,7 +486,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       </div>
 
-      {/* Guía Rápida Visual en 3 Pasos */}
       <div className="bg-[#050B1A] border border-[#2A52BE]/20 rounded-2xl p-6 sm:p-8">
         <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-emerald-400" />

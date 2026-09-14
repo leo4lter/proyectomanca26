@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { MarqueeItem, BrandItem, WebProjectItem, ChannelVideoItem, FestivalNightItem, SiteTexts } from '../types';
 import { safeStorage } from '../utils/imageCompressor';
-import { PLACEHOLDERS } from '../utils/images';
 import { normalizeContentStrings } from '../utils/textEncoding';
 import initialSiteData from '../data/siteContent.json';
 
-// Base URL de la web ("./" = rutas relativas, funciona en Hostinger raíz o subcarpeta)
 const SITE_BASE =
   typeof import.meta !== 'undefined' &&
   (import.meta as unknown as { env?: { BASE_URL?: string } }).env?.BASE_URL
@@ -14,62 +12,51 @@ const SITE_BASE =
 const contentApiUrl = (filename: string) => `${SITE_BASE}api/${filename}`;
 
 interface SiteContentState {
-  // Routing / Admin mode
   isAdminRoute: boolean;
   navigateToAdmin: () => void;
   navigateToPublic: () => void;
 
-  // Editable Website Texts
   siteTexts: SiteTexts;
   setSiteTexts: React.Dispatch<React.SetStateAction<SiteTexts>>;
   updateSiteText: (key: keyof SiteTexts, value: string) => void;
   resetSiteTexts: () => void;
 
-  // Brand Icon / Logo
   customIconUrl: string | null;
   setCustomIconUrl: (url: string | null) => void;
 
-  // Footer Logo
   customFooterLogoUrl: string | null;
   setCustomFooterLogoUrl: (url: string | null) => void;
 
-  // Marquee under Home
   marqueeItems: MarqueeItem[];
   setMarqueeItems: React.Dispatch<React.SetStateAction<MarqueeItem[]>>;
   updateMarqueeItem: (id: string, updated: Partial<MarqueeItem>) => void;
   addMarqueeItem: (item: Omit<MarqueeItem, 'id'>) => void;
   deleteMarqueeItem: (id: string) => void;
 
-  // Partner Brands Carousel
   brandLogos: BrandItem[];
   setBrandLogos: React.Dispatch<React.SetStateAction<BrandItem[]>>;
   addBrandLogo: (brand: Omit<BrandItem, 'id'>) => void;
   deleteBrandLogo: (id: string) => void;
 
-  // Developed Web Projects Carousel
   webProjects: WebProjectItem[];
   setWebProjects: React.Dispatch<React.SetStateAction<WebProjectItem[]>>;
   addWebProject: (project: Omit<WebProjectItem, 'id'>) => void;
   updateWebProject: (id: string, updated: Partial<WebProjectItem>) => void;
   deleteWebProject: (id: string) => void;
 
-  // Festival Nights (Playas Doradas 2026)
   festivalNights: FestivalNightItem[];
   setFestivalNights: React.Dispatch<React.SetStateAction<FestivalNightItem[]>>;
   updateFestivalNight: (index: number, updated: Partial<FestivalNightItem>) => void;
 
-  // Channel Videos (@elmancasg)
   channelVideos: ChannelVideoItem[];
   setChannelVideos: React.Dispatch<React.SetStateAction<ChannelVideoItem[]>>;
   updateChannelVideo: (id: string, updated: Partial<ChannelVideoItem>) => void;
 
-  // Apply changes mechanism
   hasPendingChanges: boolean;
   setHasPendingChanges: (val: boolean) => void;
   lastAppliedTime: string | null;
   applyAllChanges: () => Promise<{ success: boolean; message: string; timestamp: string; hostingerSaved?: boolean }>;
 
-  // Hostinger Integration & Cloud Storage
   hostingerUrl: string;
   setHostingerUrl: (url: string) => void;
   isHostingerConnected: boolean;
@@ -77,14 +64,11 @@ interface SiteContentState {
   uploadImageToHostinger: (file: File, suggestedName?: string) => Promise<string>;
   syncWithHostinger: () => Promise<{ success: boolean; message: string }>;
 
-  // Backup & Restore
   exportContentJson: () => string;
   importContentJson: (jsonString: string) => boolean;
 
-  // Reset to default
   resetToDefaults: () => void;
 
-  // Active admin tab
   adminActiveTab: 'texts' | 'icon' | 'marquee' | 'brands' | 'webs' | 'festival' | 'hostinger';
   setAdminActiveTab: (tab: 'texts' | 'icon' | 'marquee' | 'brands' | 'webs' | 'festival' | 'hostinger') => void;
 }
@@ -127,292 +111,15 @@ export const defaultSiteTexts: SiteTexts = {
   contactWhatsAppText: '¡Hola Manca! Quisiera consultar por sus servicios de streaming y desarrollo web.',
 };
 
-const defaultFestivalNights: FestivalNightItem[] = [
-  {
-    night: 'Noche 1',
-    title: 'Apertura & Escenario Principal',
-    youtubeId: 'QMQ4kJgnf0M',
-    url: 'https://www.youtube.com/live/QMQ4kJgnf0M?si=u7LGmLoHpSz_uQM1',
-    thumbnail: 'https://i.ytimg.com/vi/QMQ4kJgnf0M/hqdefault.jpg',
-    badge: 'Transmisión Oficial Noche 1',
-  },
-  {
-    night: 'Noche 2',
-    title: 'Artistas, Shows & Cobertura',
-    youtubeId: '6sBlnahh6Y4',
-    url: 'https://www.youtube.com/live/6sBlnahh6Y4?si=HVbcGwsiHIRzuAfj',
-    thumbnail: 'https://i.ytimg.com/vi/6sBlnahh6Y4/hqdefault.jpg',
-    badge: 'Transmisión Oficial Noche 2',
-  },
-  {
-    night: 'Noche 3',
-    title: 'Gran Cierre del Festival',
-    youtubeId: 'dHIYvORgujw',
-    url: 'https://www.youtube.com/live/dHIYvORgujw?si=J7qhGi9FixakN2CB',
-    thumbnail: 'https://i.ytimg.com/vi/dHIYvORgujw/hqdefault.jpg',
-    badge: 'Transmisión Oficial Noche 3',
-  },
-];
+const defaultFestivalNights: FestivalNightItem[] = (initialSiteData?.festivalNights as FestivalNightItem[]) || [];
 
-const defaultMarqueeItems: MarqueeItem[] = [
-  // PLACEHOLDERS LOCALES: cada tarjeta usa public/assets/img/placeholder-galeria.svg
-  // Para usar fotos propias: reemplazá ese archivo o subí una imagen desde el panel Admin.
-  {
-    id: 'm1',
-    title: 'Fiesta Nacional de Playas Doradas 2026',
-    category: 'Streaming de Gran Escala',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Noches en Vivo 1, 2 y 3',
-  },
-  {
-    id: 'm2',
-    title: 'Transmisión Multicámara en Directo',
-    category: 'Producción & Broadcast',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Calidad Broadcast HD',
-  },
-  {
-    id: 'm3',
-    title: 'Radio Municipal & Estudios',
-    category: 'Audio & Streaming',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Sonido & Enlace Digital',
-  },
-  {
-    id: 'm4',
-    title: 'El Canal: Deportes Locales @elmancasg',
-    category: 'Impacto Comunitario',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Visibilidad a Jóvenes Talentos',
-  },
-  {
-    id: 'm5',
-    title: 'Diseño Web Integral con Hosting',
-    category: 'Agencia Digital 360',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Web + Dominio + Webmail',
-  },
-  {
-    id: 'm6',
-    title: 'Publicidad Audiovisual (4 videos/mes)',
-    category: 'Contenido Comercial',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Promoción $200.000',
-  },
-  {
-    id: 'm7',
-    title: 'Historias que Inspiran a Nuestra Comunidad',
-    category: 'El Canal Comunitario',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Referentes para Niños & Jóvenes',
-  },
-  {
-    id: 'm8',
-    title: 'Planes de Sponsor & Banners en Pantalla',
-    category: 'Patrocinio en Video',
-    image: PLACEHOLDERS.galeria,
-    tag: 'Menciones & Presencia de Marca',
-  },
-];
+const defaultMarqueeItems: MarqueeItem[] = (initialSiteData?.marqueeItems as MarqueeItem[]) || [];
 
-const defaultBrandLogos: BrandItem[] = [
-  // LOGOS DE MARCAS: usan public/assets/img/placeholder-marca.svg
-  // Reemplazá ese archivo o cargá cada logo desde el panel Admin (pestaña Marcas).
-  {
-    id: 'b1',
-    name: 'Fiesta Nacional de Playas Doradas',
-    logo: PLACEHOLDERS.marca,
-    category: 'Evento Oficial',
-  },
-  {
-    id: 'b2',
-    name: 'Radio Municipal Sierra Grande',
-    logo: PLACEHOLDERS.marca,
-    category: 'Medio Aliado',
-  },
-  {
-    id: 'b3',
-    name: 'Municipalidad Sierra Grande',
-    logo: PLACEHOLDERS.marca,
-    category: 'Institucional',
-  },
-  {
-    id: 'b4',
-    name: 'Club Atlético Comunitario',
-    logo: PLACEHOLDERS.marca,
-    category: 'Deportes',
-  },
-  {
-    id: 'b5',
-    name: 'Comercio & Empresa Regional',
-    logo: PLACEHOLDERS.marca,
-    category: 'Comercio Local',
-  },
-  {
-    id: 'b6',
-    name: 'Parador & Turismo Playas',
-    logo: PLACEHOLDERS.marca,
-    category: 'Turismo',
-  },
-  {
-    id: 'b7',
-    name: 'Distribuidora Costa Atlántica',
-    logo: PLACEHOLDERS.marca,
-    category: 'Sponsor Oficial',
-  },
-];
+const defaultBrandLogos: BrandItem[] = (initialSiteData?.brandLogos as BrandItem[]) || [];
 
-const defaultWebProjects: WebProjectItem[] = [
-  // WEBS DESARROLLADAS: usan public/assets/img/placeholder-web.svg
-  // Reemplazá ese archivo o subí capturas PNG/GIF desde el panel Admin (pestaña Webs).
-  {
-    id: 'w1',
-    title: 'Portal Playas Doradas Turismo & Hospedajes',
-    client: 'Secretaría de Turismo & Paradores',
-    thumbnail: PLACEHOLDERS.web,
-    liveUrl: '#',
-    tag: 'Web Responsive + Webmail',
-    description: 'Guía interactiva de balnearios, reservas y eventos con dominio oficial y hosting de alta velocidad.',
-  },
-  {
-    id: 'w2',
-    title: 'Comercio Digital & Catálogo Sierra Grande',
-    client: 'Red de Comercios Regionales',
-    thumbnail: PLACEHOLDERS.web,
-    liveUrl: '#',
-    tag: 'E-commerce & WhatsApp',
-    description: 'Catálogo autogestionable con integración a WhatsApp Business para pedidos y consultas directas.',
-  },
-  {
-    id: 'w3',
-    title: 'Radio Municipal Streaming & Noticias Web',
-    client: 'Emisora Municipal FM',
-    thumbnail: PLACEHOLDERS.web,
-    liveUrl: '#',
-    tag: 'Streaming Audio Player + Noticias',
-    description: 'Plataforma web con reproductor de radio en vivo las 24 hs, podcasts y noticias locales actualizadas.',
-  },
-  {
-    id: 'w4',
-    title: 'Portal de Eventos & Coberturas Comunitarias',
-    client: 'Manca Productora',
-    thumbnail: PLACEHOLDERS.web,
-    liveUrl: '#',
-    tag: 'Plataforma Multimedia',
-    description: 'Transmisiones en vivo, galerías de fotos de alta resolución y archivo de transmisiones pasadas.',
-  },
-];
+const defaultWebProjects: WebProjectItem[] = (initialSiteData?.webProjects as WebProjectItem[]) || [];
 
-const defaultChannelVideos: ChannelVideoItem[] = [
-  {
-    id: 'yt_TPbwU237jqg',
-    title: 'PASANTÍAS 2026 | Proyecto Educativo de la EEE Nº11 de Sierra Grande',
-    youtubeId: 'TPbwU237jqg',
-    thumbnail: 'https://i.ytimg.com/vi/TPbwU237jqg/hqdefault.jpg',
-    views: '532 vistas',
-    duration: 'Reportaje',
-    date: 'Septiembre 2026',
-  },
-  {
-    id: 'yt_sq3KAbJKZ9o',
-    title: '🎉 DÍA DEL NIÑO EN SIERRA GRANDE: ¡VUTA MAHUIDA SE LLENO DE ALEGRIA! 🔥🎈',
-    youtubeId: 'sq3KAbJKZ9o',
-    thumbnail: 'https://i.ytimg.com/vi/sq3KAbJKZ9o/hqdefault.jpg',
-    views: '393 vistas',
-    duration: 'Comunidad',
-    date: 'Agosto 2026',
-  },
-  {
-    id: 'yt_h_mx1ZPC1sE',
-    title: 'REINAUGURACIÓN DE LA PLAZA DE Bº ESFUERZO PROPIO E ISLAS MALVINAS | INFORMES SG',
-    youtubeId: 'h-mx1ZPC1sE',
-    thumbnail: 'https://i.ytimg.com/vi/h-mx1ZPC1sE/hqdefault.jpg',
-    views: '253 vistas',
-    duration: 'Informes SG',
-    date: 'Agosto 2026',
-  },
-  {
-    id: 'yt__Hc3iBt6NrM',
-    title: '¡Histórico! La nieve volvió a Sierra Grande y recorrimos distintos puntos de nuestro pueblo.',
-    youtubeId: '-Hc3iBt6NrM',
-    thumbnail: 'https://i.ytimg.com/vi/-Hc3iBt6NrM/hqdefault.jpg',
-    views: '545 vistas',
-    duration: 'Cobertura',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_cA4vjirTuS8',
-    title: 'LA HORA DEL PIQUE - #EP5 - 2026',
-    youtubeId: 'cA4vjirTuS8',
-    thumbnail: 'https://i.ytimg.com/vi/cA4vjirTuS8/hqdefault.jpg',
-    views: '186 vistas',
-    duration: 'Programa',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_wkSjdSsyPHI',
-    title: '¡Así se viven las Vacaciones de Invierno en los Barrios de Sierra Grande! | INFORMES SG',
-    youtubeId: 'wkSjdSsyPHI',
-    thumbnail: 'https://i.ytimg.com/vi/wkSjdSsyPHI/hqdefault.jpg',
-    views: '354 vistas',
-    duration: 'Informes SG',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_gKaYcnlYagg',
-    title: 'ARGENTINA ES FINALISTA DEL MUNDIAL 2026 - FESTEJOS EN SIERRA GRANDE',
-    youtubeId: 'gKaYcnlYagg',
-    thumbnail: 'https://i.ytimg.com/vi/gKaYcnlYagg/hqdefault.jpg',
-    views: '823 vistas',
-    duration: 'Festejos',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_z6Ml2HLe4L0',
-    title: 'ACTO 9 DE JULIO | Escuela N°251 T.Tarde | #MancaenlasEscuelas EP. 3',
-    youtubeId: 'z6Ml2HLe4L0',
-    thumbnail: 'https://i.ytimg.com/vi/z6Ml2HLe4L0/hqdefault.jpg',
-    views: '451 vistas',
-    duration: 'Escuelas',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_QHh_51eVzIk',
-    title: 'LA HORA DEL PIQUE - #EP4 - 2026',
-    youtubeId: 'QHh_51eVzIk',
-    thumbnail: 'https://i.ytimg.com/vi/QHh_51eVzIk/hqdefault.jpg',
-    views: '201 vistas',
-    duration: 'Programa',
-    date: 'Julio 2026',
-  },
-  {
-    id: 'yt_4Zr1wXE_2yM',
-    title: 'Emprende SG | ABOGADA Fátima Maldonado: "UN DEUDOR DE ALIMENTOS ESTUVO 10 AÑOS SIN DAR UN PESO"',
-    youtubeId: '4Zr1wXE_2yM',
-    thumbnail: 'https://i.ytimg.com/vi/4Zr1wXE_2yM/hqdefault.jpg',
-    views: '51 vistas',
-    duration: 'Entrevista',
-    date: 'Junio 2026',
-  },
-  {
-    id: 'yt_8Hlhe1VMlW8',
-    title: 'PROMESA A LA BANDERA 2026 | Escuela N° 62 | #MancaenlasEscuelas EP. 2',
-    youtubeId: '8Hlhe1VMlW8',
-    thumbnail: 'https://i.ytimg.com/vi/8Hlhe1VMlW8/hqdefault.jpg',
-    views: '569 vistas',
-    duration: 'Escuelas',
-    date: 'Junio 2026',
-  },
-  {
-    id: 'yt_1zpfzZoGYVQ',
-    title: 'LA HORA DEL PIQUE - #EP2 - 2026',
-    youtubeId: '1zpfzZoGYVQ',
-    thumbnail: 'https://i.ytimg.com/vi/1zpfzZoGYVQ/hqdefault.jpg',
-    views: '344 vistas',
-    duration: 'Programa',
-    date: 'Junio 2026',
-  },
-];
+const defaultChannelVideos: ChannelVideoItem[] = (initialSiteData?.channelVideos as ChannelVideoItem[]) || [];
 
 const SiteContentContext = createContext<SiteContentState | undefined>(undefined);
 
@@ -437,13 +144,11 @@ function getNormalizedStorage<T>(key: string, fallback: T): T {
 }
 
 export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Admin Route state
   const [isAdminRoute, setIsAdminRoute] = useState<boolean>(() => checkIsAdminUrl());
   const [adminActiveTab, setAdminActiveTab] = useState<
     'texts' | 'icon' | 'marquee' | 'brands' | 'webs' | 'festival' | 'hostinger'
   >('texts');
 
-  // Hostinger Cloud URL configuration & connection status
   const [hostingerUrl, setHostingerUrlState] = useState<string>(() => {
     return safeStorage.get<string>('manca_hostinger_url', 'https://elmanca.com.ar');
   });
@@ -455,7 +160,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     safeStorage.set('manca_hostinger_url', clean);
   };
 
-  // Watch for URL changes (popstate and hashchange)
   useEffect(() => {
     const handleUrlChange = () => {
       setIsAdminRoute(checkIsAdminUrl());
@@ -483,7 +187,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setIsAdminRoute(false);
   };
 
-  // State with safeStorage fallback to initialSiteData
   const [customIconUrl, setCustomIconUrlState] = useState<string | null>(() => {
     return safeStorage.get<string | null>(
       'manca_custom_icon',
@@ -594,7 +297,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     safeStorage.set('manca_site_texts', defaultSiteTexts);
   };
 
-  // Global Sync: Fetch live published content from Hostinger or server API on boot
   useEffect(() => {
     let isMounted = true;
 
@@ -654,7 +356,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     const fetchContent = async () => {
-      // 1. If hostingerUrl is configured, try Hostinger API first
       const cleanHostinger = hostingerUrl?.trim().replace(/\/+$/, '');
       if (cleanHostinger) {
         try {
@@ -668,11 +369,9 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
             }
           }
         } catch (e) {
-          // Hostinger not yet reached or CORS pending, proceed to local API
         }
       }
 
-      // 1b. Hostinger PHP API en la MISMA web (rutas relativas: funciona en raíz o subcarpeta)
       try {
         const hRes = await fetch(contentApiUrl('content.php'), { mode: 'cors' });
         if (hRes.ok) {
@@ -683,10 +382,8 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
           }
         }
       } catch (e) {
-        // Sin API PHP en esta ubicación, continuamos
       }
 
-      // 2. Local Node/Express server /api/content
       try {
         const res = await fetch('/api/content');
         if (res.ok) {
@@ -694,7 +391,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
           if (data) applyIncomingData(data);
         }
       } catch (err) {
-        // Fallback silently to local storage or initialSiteData
       }
     };
 
@@ -705,7 +401,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
   }, [hostingerUrl]);
 
-  // Test Hostinger Connection
   const testHostingerConnection = async (urlToCheck?: string) => {
     const targetUrl = (urlToCheck || hostingerUrl).trim().replace(/\/+$/, '');
     if (!targetUrl) {
@@ -738,13 +433,11 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  // Upload Image to Hostinger (with fallback to local /api/upload)
   const uploadImageToHostinger = async (file: File, suggestedName = 'manca'): Promise<string> => {
     const { compressImageFile } = await import('../utils/imageCompressor');
     const compressed = await compressImageFile(file, 1600, 0.88);
     const cleanHostinger = hostingerUrl.trim().replace(/\/+$/, '');
 
-    // 1. Try configured Hostinger endpoint
     if (cleanHostinger) {
       try {
         const res = await fetch(`${cleanHostinger}/api/upload.php`, {
@@ -764,7 +457,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }
     }
 
-    // 1.5. API PHP de la misma web (Hostinger: api/upload.php)
     try {
       const res = await fetch(contentApiUrl('upload.php'), {
         method: 'POST',
@@ -779,7 +471,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       console.warn('Local PHP upload error:', err3);
     }
 
-    // 2. Try local server or same-domain Hostinger (/api/upload.php or /api/upload)
     try {
       const res = await fetch('/api/upload.php', {
         method: 'POST',
@@ -806,11 +497,9 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       console.warn('Local /api/upload error:', err2);
     }
 
-    // 3. Fallback to compressed base64
     return compressed;
   };
 
-  // Manual trigger to sync current site state directly with Hostinger
   const syncWithHostinger = async () => {
     const cleanHostinger = hostingerUrl.trim().replace(/\/+$/, '');
     if (!cleanHostinger) {
@@ -859,7 +548,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  // Sync favicon if icon changed
   const setCustomIconUrl = (url: string | null) => {
     setCustomIconUrlState(url);
     setHasPendingChanges(true);
@@ -979,7 +667,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     );
   };
 
-  // Export content as JSON string
   const exportContentJson = () => {
     const data = {
       siteTexts,
@@ -995,7 +682,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     return JSON.stringify(data, null, 2);
   };
 
-  // Import content from JSON string
   const importContentJson = (jsonString: string): boolean => {
     try {
       const data = normalizeContentStrings(JSON.parse(jsonString));
@@ -1034,7 +720,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  // Master APPLY CHANGES function - Persists to browser, server API & workspace code
   const applyAllChanges = async () => {
     const now = new Date().toLocaleTimeString('es-AR', {
       hour: '2-digit',
@@ -1042,7 +727,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       second: '2-digit',
     });
 
-    // 1. Immediate client-side update
     safeStorage.set('manca_site_texts', siteTexts);
 
     if (customIconUrl) {
@@ -1069,7 +753,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setLastAppliedTime(now);
     setHasPendingChanges(false);
 
-    // 2. Server-side persistence (Local Express server)
     const payload = {
       siteTexts,
       customIconUrl,
@@ -1085,7 +768,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     let serverSaved = false;
     let hostingerSaved = false;
 
-    // Save to Hostinger if configured
     const cleanHostinger = hostingerUrl.trim().replace(/\/+$/, '');
     if (cleanHostinger) {
       try {
@@ -1103,7 +785,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }
     }
 
-    // Guardar en la API PHP de la misma web (Hostinger: api/content.php)
     try {
       const res = await fetch(contentApiUrl('content.php'), {
         method: 'POST',
@@ -1173,7 +854,6 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setLastAppliedTime(null);
     setHasPendingChanges(false);
 
-    // Also reset server content
     try {
       fetch('/api/content', {
         method: 'POST',

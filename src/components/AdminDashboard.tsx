@@ -5,35 +5,7 @@ import { compressImageFile } from '../utils/imageCompressor';
 import { AdminHostingerTab } from './AdminHostingerTab';
 import { AdminImagePicker } from './AdminImagePicker';
 import { AdminTextsTab } from './AdminTextsTab';
-import {
-  Globe,
-  SlidersHorizontal,
-  Image as ImageIcon,
-  Layers,
-  Briefcase,
-  Upload,
-  Plus,
-  Trash2,
-  RotateCcw,
-  Check,
-  ExternalLink,
-  ArrowLeft,
-  Eye,
-  EyeOff,
-  Sparkles,
-  Save,
-  Film,
-  X,
-  Download,
-  UploadCloud,
-  Database,
-  Server,
-  Type,
-  Lock,
-  User,
-  LogIn,
-  LogOut,
-} from 'lucide-react';
+import { Globe, SlidersHorizontal, Image as ImageIcon, Layers, Briefcase, Upload, Plus, Trash2, RotateCcw, Check, ExternalLink, ArrowLeft, Eye, EyeOff, Sparkles, Save, Film, X, Download, CloudUpload as UploadCloud, Database, Server, Type, Lock, User, LogIn, LogOut } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   const {
@@ -70,7 +42,6 @@ export const AdminDashboard: React.FC = () => {
     uploadImageToHostinger,
   } = useSiteContent();
 
-  // Authentication State: admin / @elmanca91218
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return (
@@ -86,18 +57,36 @@ export const AdminDashboard: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [rememberMe, setRememberMe] = useState(true);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (usernameInput.trim() === 'admin' && passwordInput === '@elmanca91218') {
-      setIsAuthenticated(true);
-      setLoginError(null);
-      sessionStorage.setItem('manca_admin_auth', 'true');
-      if (rememberMe) {
-        localStorage.setItem('manca_admin_auth', 'true');
+    setIsLoggingIn(true);
+    setLoginError(null);
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: usernameInput.trim(), password: passwordInput }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          setIsAuthenticated(true);
+          sessionStorage.setItem('manca_admin_auth', 'true');
+          if (rememberMe) {
+            localStorage.setItem('manca_admin_auth', 'true');
+          }
+        } else {
+          setLoginError('Usuario o contraseña incorrectos. Verifique sus credenciales.');
+        }
+      } else {
+        setLoginError('Usuario o contraseña incorrectos. Verifique sus credenciales.');
       }
-    } else {
-      setLoginError('Usuario o contraseña incorrectos. Verifique sus credenciales.');
+    } catch {
+      setLoginError('No se pudo conectar con el servidor. Intente nuevamente.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -119,7 +108,6 @@ export const AdminDashboard: React.FC = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [appliedDetails, setAppliedDetails] = useState<{ timestamp: string; count: number; serverSaved?: boolean } | null>(null);
 
-// Selector de imágenes de la galería del sitio (assets/img + uploads)
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerTarget, setPickerTarget] = useState<string>('marquee-new');
 
@@ -161,7 +149,6 @@ export const AdminDashboard: React.FC = () => {
     setTimeout(() => setSavedNotice(null), 3500);
   };
 
-  // Master Apply Changes Handler (Saves to client + server filesystem + workspace code)
   const handleApplyChanges = async () => {
     setIsApplying(true);
     try {
@@ -180,7 +167,6 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  // Download backup JSON file
   const handleDownloadBackup = () => {
     const jsonStr = exportContentJson();
     const blob = new Blob([jsonStr], { type: 'application/json' });
@@ -195,7 +181,6 @@ export const AdminDashboard: React.FC = () => {
     showNotification('✓ Respaldo JSON descargado');
   };
 
-  // Import backup JSON file
   const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -214,11 +199,9 @@ export const AdminDashboard: React.FC = () => {
       };
       reader.readAsText(file);
     }
-    // reset input value so re-selecting works
     e.target.value = '';
   };
 
-  // Safe file upload to Hostinger with fallback
   const handleFileUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
     onSuccess: (url: string) => void,
@@ -246,7 +229,6 @@ export const AdminDashboard: React.FC = () => {
     e.target.value = '';
   };
 
-  // Temporary forms for new items
   const [newMarquee, setNewMarquee] = useState({
     title: '',
     category: 'Producción Audiovisual',
@@ -269,15 +251,12 @@ export const AdminDashboard: React.FC = () => {
     description: '',
   });
 
-  // Authentication Gate: if user is not authenticated with admin / @elmanca91218
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen w-full bg-[#040813] text-white flex flex-col justify-center items-center p-4 sm:p-6 font-['Kanit'] selection:bg-[#2A52BE] selection:text-white relative overflow-hidden">
-        {/* Ambient background glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#2A52BE]/18 blur-[130px] pointer-events-none rounded-full" />
 
         <div className="w-full max-w-md bg-[#081024] border border-[#2A52BE]/50 rounded-3xl p-6 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative z-10">
-          {/* Logo & Title */}
           <div className="flex flex-col items-center text-center mb-6">
             <div className="w-16 h-16 rounded-2xl bg-[#111D42] border border-[#2A52BE]/70 flex items-center justify-center text-[#60A5FA] mb-4 shadow-[0_0_30px_rgba(42,82,190,0.5)] overflow-hidden">
               {customIconUrl ? (
@@ -376,7 +355,7 @@ export const AdminDashboard: React.FC = () => {
               className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-[#2A52BE] to-[#3870E0] hover:from-[#1E3A8A] hover:to-[#2A52BE] text-white font-bold text-xs uppercase tracking-widest transition-all duration-200 shadow-[0_0_25px_rgba(42,82,190,0.5)] hover:shadow-[0_0_35px_rgba(42,82,190,0.8)] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
             >
               <LogIn className="w-4 h-4" />
-              <span>Ingresar al Panel</span>
+              <span>{isLoggingIn ? 'Verificando...' : 'Ingresar al Panel'}</span>
             </button>
           </form>
 
@@ -399,7 +378,6 @@ export const AdminDashboard: React.FC = () => {
     <div
       className="min-h-screen w-full bg-[#040813] text-white flex flex-col font-['Kanit'] selection:bg-[#2A52BE] selection:text-white pb-20"
     >
-      {/* Top Header Bar */}
       <header className="w-full bg-[#081024] border-b border-[#2A52BE]/40 px-5 sm:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 sticky top-0 z-50 backdrop-blur-lg">
         <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
           <div className="flex items-center gap-3">
@@ -426,7 +404,6 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick exit on mobile */}
           <button
             type="button"
             onClick={navigateToPublic}
@@ -437,9 +414,7 @@ export const AdminDashboard: React.FC = () => {
           </button>
         </div>
 
-        {/* Action Controls */}
         <div className="flex items-center flex-wrap gap-2 w-full sm:w-auto justify-end">
-          {/* Export JSON backup */}
           <button
             type="button"
             onClick={handleDownloadBackup}
@@ -450,7 +425,6 @@ export const AdminDashboard: React.FC = () => {
             <span className="hidden lg:inline">Descargar JSON</span>
           </button>
 
-          {/* Import JSON backup */}
           <label
             className="px-2.5 py-2 rounded-xl border border-[#2A52BE]/40 bg-[#0F1B38] text-[#93C5FD] hover:text-white hover:bg-[#162752] text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
             title="Cargar archivo de respaldo JSON"
@@ -484,7 +458,6 @@ export const AdminDashboard: React.FC = () => {
             <span className="hidden xl:inline">Restablecer</span>
           </button>
 
-          {/* BOTÓN APLICAR CAMBIOS PRINCIPAL */}
           <button
             type="button"
             id="admin-header-apply-button"
@@ -512,7 +485,6 @@ export const AdminDashboard: React.FC = () => {
             <span>Ver Sitio en Vivo</span>
           </button>
 
-          {/* User Badge & Logout */}
           <div className="flex items-center gap-2 pl-1 sm:pl-2 border-l border-[#2A52BE]/30">
             <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#14234C] border border-[#2A52BE]/40 text-xs text-[#93C5FD]">
               <User className="w-3.5 h-3.5 text-[#60A5FA]" />
@@ -531,10 +503,8 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </header>
 
-      {/* Tabs Navigation */}
       <div className="w-full bg-[#060C1B] border-b border-[#2A52BE]/20 px-5 sm:px-8 flex overflow-x-auto select-none">
         <div className="max-w-6xl w-full mx-auto flex gap-2">
-          {/* TAB 0: TEXTOS DEL SITIO */}
           <button
             type="button"
             id="admin-tab-texts"
@@ -641,7 +611,6 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Notifications Toast */}
       {savedNotice && (
         <div className="bg-[#2A52BE] text-white text-xs font-semibold uppercase tracking-wider py-2 px-4 text-center flex items-center justify-center gap-2 shadow-lg animate-pulse">
           <Check className="w-4 h-4" />
@@ -655,12 +624,9 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Main Container */}
       <main className="flex-1 max-w-6xl w-full mx-auto p-5 sm:p-8 space-y-8">
-        {/* TAB 0: TEXTOS DEL SITIO */}
         {activeTab === 'texts' && <AdminTextsTab />}
 
-        {/* TAB 1: ICON & LOGO */}
         {activeTab === 'icon' && (
           <div className="space-y-6">
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
@@ -672,7 +638,6 @@ export const AdminDashboard: React.FC = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-8">
-                {/* Visual Preview */}
                 <div className="flex flex-col items-center gap-3 p-5 rounded-3xl bg-[#040813] border border-[#2A52BE]/40 shadow-xl">
                   <span className="text-[11px] uppercase tracking-wider text-[#93C5FD] font-semibold">
                     Vista Previa Actual
@@ -693,7 +658,6 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Upload & Link Controls */}
                 <div className="flex-1 w-full space-y-5">
                   <div>
                     <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold block mb-2">
@@ -749,7 +713,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Sub-Card: Logo Oficial del Footer */}
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
               <h3 className="text-lg font-bold uppercase text-white tracking-wide mb-2">
                 Logo Oficial del Footer (Pie de Página)
@@ -759,7 +722,6 @@ export const AdminDashboard: React.FC = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-8">
-                {/* Visual Preview */}
                 <div className="flex flex-col items-center gap-3 p-5 rounded-3xl bg-[#040813] border border-[#2A52BE]/40 shadow-xl min-w-[200px]">
                   <span className="text-[11px] uppercase tracking-wider text-[#93C5FD] font-semibold">
                     Vista Previa Footer
@@ -791,7 +753,6 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Upload & Link Controls */}
                 <div className="flex-1 w-full space-y-5">
                   <div>
                     <label className="text-xs uppercase tracking-wider text-[#93C5FD] font-semibold block mb-2">
@@ -852,7 +813,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: MARQUEE UNDER HOME */}
         {activeTab === 'marquee' && (
           <div className="space-y-6">
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
@@ -863,7 +823,6 @@ export const AdminDashboard: React.FC = () => {
                 Modificá las imágenes, títulos y etiquetas de las producciones que rotan horizontalmente bajo el hero.
               </p>
 
-              {/* Add New Marquee Card */}
               <div className="bg-[#060D1E] border border-[#2A52BE]/30 rounded-2xl p-5 mb-8">
                 <h4 className="text-xs uppercase tracking-wider font-bold text-[#60A5FA] mb-4 flex items-center gap-1.5">
                   <Plus className="w-4 h-4" />
@@ -947,7 +906,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {/* List of existing marquee items */}
               <div className="space-y-3">
                 {marqueeItems.map((item) => (
                   <div
@@ -984,7 +942,6 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Inline Form Controls */}
                     <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
                       <input
                         type="text"
@@ -1037,7 +994,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 3: BRANDS & CLIENTS (GRAYSCALE/ILLUMINATED) */}
         {activeTab === 'brands' && (
           <div className="space-y-6">
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
@@ -1048,7 +1004,6 @@ export const AdminDashboard: React.FC = () => {
                 Los logos aparecen en blanco y negro con fondo negro en la web pública, e iluminan sus colores y brillo neón al pasar el cursor.
               </p>
 
-              {/* Add New Brand */}
               <div className="bg-[#060D1E] border border-[#2A52BE]/30 rounded-2xl p-5 mb-8">
                 <h4 className="text-xs uppercase tracking-wider font-bold text-[#60A5FA] mb-4 flex items-center gap-1.5">
                   <Plus className="w-4 h-4" />
@@ -1124,7 +1079,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {/* Grid of current brands */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {brandLogos.map((brand) => (
                   <div
@@ -1158,7 +1112,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 4: DEVELOPED WEBS & MINIATURES (PNG / GIF) */}
         {activeTab === 'webs' && (
           <div className="space-y-6">
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
@@ -1169,7 +1122,6 @@ export const AdminDashboard: React.FC = () => {
                 Mostrá capturas o GIFs animados de los sitios web creados para clientes de la región en el carrusel de Transformación Digital.
               </p>
 
-              {/* Add New Web Project */}
               <div className="bg-[#060D1E] border border-[#2A52BE]/30 rounded-2xl p-5 mb-8">
                 <h4 className="text-xs uppercase tracking-wider font-bold text-[#60A5FA] mb-4 flex items-center gap-1.5">
                   <Plus className="w-4 h-4" />
@@ -1278,7 +1230,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {/* Grid of existing web projects */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {webProjects.map((web) => (
                   <div
@@ -1335,7 +1286,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 5: FESTIVAL PLAYAS DORADAS 2026 & COBERTURAS */}
         {activeTab === 'festival' && (
           <div className="space-y-6">
             <div className="bg-[#0A1226] border border-[#2A52BE]/40 rounded-3xl p-6 sm:p-8">
@@ -1358,7 +1308,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {/* 3 Nights Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
                 {festivalNights.map((night, idx) => (
                   <div
@@ -1375,7 +1324,6 @@ export const AdminDashboard: React.FC = () => {
                         </span>
                       </div>
 
-                      {/* Thumbnail Preview with instant upload */}
                       <div className="relative w-full h-40 rounded-xl overflow-hidden bg-[#02050D] border border-[#2A52BE]/40 mb-3 group">
                         <img
                           src={night.thumbnail}
@@ -1475,7 +1423,6 @@ export const AdminDashboard: React.FC = () => {
                 ))}
               </div>
 
-              {/* YouTube Channel Section */}
               <div className="border-t border-[#2A52BE]/30 pt-6">
                 <h4 className="text-sm font-bold uppercase text-white tracking-wide mb-3 flex items-center gap-2">
                   <Film className="w-4 h-4 text-[#3870E0]" />
@@ -1545,11 +1492,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 6: HOSTINGER & ARCHIVOS */}
         {activeTab === 'hostinger' && <AdminHostingerTab />}
       </main>
 
-      {/* Persistent Bottom Action Dock with Functional Apply Changes Button */}
       <div className="fixed bottom-0 left-0 right-0 z-40 w-full bg-[#070D1E]/95 backdrop-blur-lg border-t border-[#2A52BE]/40 px-5 sm:px-8 py-3.5 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -1575,7 +1520,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-            {/* BOTÓN APLICAR CAMBIOS PRINCIPAL INFERIOR */}
             <button
               type="button"
               id="admin-bottom-apply-button"
@@ -1599,7 +1543,6 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Success Confirmation Modal */}
       {showSuccessModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-[#0A1329] border-2 border-[#2A52BE] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-[0_0_60px_rgba(42,82,190,0.6)] text-center relative">
@@ -1676,7 +1619,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
       )}
-{/* Selector de imágenes de la galería del sitio */}
       <AdminImagePicker
         open={pickerOpen}
         onClose={() => setPickerOpen(false)}

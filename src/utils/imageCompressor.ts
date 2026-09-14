@@ -1,7 +1,4 @@
-/**
- * Compresses an image file or DataURL to ensure it doesn't exceed localStorage quotas.
- * Resizes max dimension to 1200px and encodes to JPEG/WebP at 0.8 quality.
- */
+
 export async function compressImageFile(file: File, maxDimension = 1200, quality = 0.8): Promise<string> {
   // If it's a GIF, we preserve it as is (canvas breaks animated GIFs) unless too huge
   if (file.type === 'image/gif') {
@@ -59,9 +56,6 @@ export async function compressImageFile(file: File, maxDimension = 1200, quality
   });
 }
 
-/**
- * Safe localStorage wrapper with try-catch
- */
 export const safeStorage = {
   get: <T>(key: string, fallback: T): T => {
     try {

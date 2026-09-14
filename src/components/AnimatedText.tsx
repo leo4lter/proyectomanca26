@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 
 interface AnimatedTextProps {
   text: string;
@@ -14,7 +14,6 @@ interface WordProps {
 }
 
 const WordSpan: React.FC<WordProps> = ({ word, range, progress }) => {
-  // Smoothly fills from 0.18 (dim gray) to 1.0 (pure crisp white)
   const opacity = useTransform(progress, range, [0.18, 1]);
   const color = useTransform(progress, range, ['#475569', '#FFFFFF']);
 
@@ -40,9 +39,6 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 }) => {
   const containerRef = useRef<HTMLParagraphElement>(null);
 
-  // Clamped strictly to viewport progress within the section
-  // Starts when paragraph reaches 78% of viewport, finishes completely when reaching 45% (mid-screen)
-  // This guarantees it is 100% solid white well BEFORE the user scrolls to the next section!
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start 0.8', 'end 0.45'],

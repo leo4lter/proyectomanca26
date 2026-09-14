@@ -14,7 +14,6 @@ export const BrandsCarousel: React.FC = () => {
       id="marcas"
       className="relative w-full bg-[#03060D] py-16 sm:py-24 overflow-hidden select-none border-t border-b border-[#2A52BE]/20"
     >
-      {/* Background glow lines */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[160px] bg-[#2A52BE]/10 blur-[90px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 mb-10 sm:mb-12 flex flex-col items-center sm:items-start text-center sm:text-left">
@@ -30,9 +29,7 @@ export const BrandsCarousel: React.FC = () => {
         </p>
       </div>
 
-      {/* Marquee Carousel Container */}
       <div className="relative w-full overflow-visible py-6 sponsor-wrap" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-        {/* Left & Right gradient fades */}
         <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-36 bg-gradient-to-r from-[#03060D] to-transparent z-10 pointer-events-none" />
         <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-36 bg-gradient-to-l from-[#03060D] to-transparent z-10 pointer-events-none" />
 
@@ -42,9 +39,7 @@ export const BrandsCarousel: React.FC = () => {
               key={`${brand.id}-${idx}`}
               className="group relative flex flex-col items-center justify-center w-[180px] sm:w-[220px] h-[95px] sm:h-[115px] px-6 py-4 rounded-2xl bg-[#060B18] border border-white/10 transition-all duration-300 hover:scale-105 hover:z-30 hover:border-[#3870E0] hover:bg-[#0A1636] hover:shadow-[0_0_35px_rgba(59,130,246,0.7)] cursor-pointer"
             >
-              {/* Logo con grayscale by default, sustancialmente escala e ilumina al hover.
                   LOGOS DE MARCAS: placeholder en public/assets/img/placeholder-marca.svg.
-                  Cambialo reemplazando ese archivo o desde el Admin (pestaña Marcas). */}
               <div className="w-full h-full flex items-center justify-center overflow-visible">
                 <SmartImage
                   src={resolveImage(brand.logo, PLACEHOLDERS.marca)}
@@ -54,7 +49,6 @@ export const BrandsCarousel: React.FC = () => {
                 />
               </div>
 
-              {/* Tooltip / Label */}
               <span className="absolute -bottom-3 text-[10px] uppercase tracking-wider text-white font-semibold bg-[#03060D] px-3 py-0.5 rounded-full border border-[#2A52BE] opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none shadow-[0_0_15px_rgba(42,82,190,0.6)] whitespace-nowrap scale-90 group-hover:scale-100">
                 {brand.name}
               </span>

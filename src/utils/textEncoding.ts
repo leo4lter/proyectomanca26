@@ -29,7 +29,6 @@ function decodeWindows1252AsUtf8(value: string): string | null {
   }
 }
 
-/** Repairs text accidentally decoded as Windows-1252 instead of UTF-8. */
 export function repairMojibake(value: string): string {
   let repaired = value;
 
@@ -43,7 +42,6 @@ export function repairMojibake(value: string): string {
   return repaired;
 }
 
-/** Recursively sanitizes editable JSON content while preserving its shape. */
 export function normalizeContentStrings<T>(value: T): T {
   if (typeof value === 'string') return repairMojibake(value) as T;
   if (Array.isArray(value)) return value.map(normalizeContentStrings) as T;

@@ -17,16 +17,9 @@ interface AdminImagePickerProps {
   open: boolean;
   title?: string;
   onClose: () => void;
-  /** value = URL relativa lista para guardar (ej: "./assets/img/Footer.png") */
   onSelect: (value: string, image: GalleryImage) => void;
 }
 
-/**
- * Muestra una grilla con las imágenes que YA están en el sitio:
- *   - assets/img/  (las imágenes de la web)
- *   - uploads/     (las imágenes subidas desde el panel)
- * La lista la genera api/images.php (Hostinger) o /api/images (servidor local).
- */
 export const AdminImagePicker: React.FC<AdminImagePickerProps> = ({
   open,
   title = 'Galería de Imágenes del Sitio',
@@ -43,7 +36,6 @@ export const AdminImagePicker: React.FC<AdminImagePickerProps> = ({
     try {
       let list: GalleryImage[] | null = null;
 
-      // 1. API PHP en la misma web (Hostinger: api/images.php)
       try {
         const hRes = await fetch(`${BASE}api/images.php`, { mode: 'cors' });
         if (hRes.ok) {
@@ -53,10 +45,8 @@ export const AdminImagePicker: React.FC<AdminImagePickerProps> = ({
           }
         }
       } catch {
-        // Continuamos con el siguiente origen
       }
 
-      // 2. Servidor Node/Express local (npm run dev)
       if (!list) {
         try {
           const lRes = await fetch('/api/images');
@@ -67,7 +57,6 @@ export const AdminImagePicker: React.FC<AdminImagePickerProps> = ({
             }
           }
         } catch {
-          // Sin servidor local
         }
       }
 

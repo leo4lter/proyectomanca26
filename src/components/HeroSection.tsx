@@ -43,13 +43,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         fontFamily: "'Kanit', sans-serif",
       }}
     >
-      {/* Background Atmospheric Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] max-w-none h-[450px] bg-[#2A52BE]/18 blur-[140px] pointer-events-none rounded-full" />
       <div className="absolute top-10 left-1/2 -translate-x-[560px] w-[350px] h-[350px] bg-[#1E3A8A]/10 blur-[100px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 left-1/2 translate-x-[210px] w-[350px] h-[350px] bg-[#2A52BE]/10 blur-[120px] pointer-events-none rounded-full" />
 
-      {/* Elementos decorativos flotantes 100% locales (CSS puro, sin imágenes externas).
-          No requieren reemplazo: son brillos de marca que funcionan offline y en Hostinger. */}
       <div className="absolute top-[14%] left-[2%] sm:left-[4%] md:left-[6%] z-10 pointer-events-none hidden sm:block">
         <Magnet padding={120} strength={4}>
           <FadeIn delay={0.2} x={-60} y={0} duration={1}>
@@ -82,16 +79,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         </Magnet>
       </div>
 
-      {/* 1. TOP NAVIGATION BAR */}
       <header className="relative z-40 w-full px-5 sm:px-8 md:px-12 py-5 sm:py-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Brand Logo */}
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <a
             href="#inicio"
             className="flex items-center gap-3 group transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
           >
-            {/* Brand Logo — LOGO PRINCIPAL: se muestra public/assets/img/logo-manca.svg.
-                Para cambiarlo: reemplazá ese archivo o subí tu logo desde el Admin. */}
             {resolveImage(customIconUrl, PLACEHOLDERS.logo) ? (
               <SmartImage
                 src={resolveImage(customIconUrl, PLACEHOLDERS.logo)}
@@ -113,7 +106,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0A142A]/80 border border-[#2A52BE]/40 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
             {navLinks.map((link) => (
               <a
@@ -126,7 +118,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             ))}
           </nav>
 
-          {/* Header Action / Contact Button */}
           <div className="hidden sm:flex items-center gap-3">
             <ContactButton
               label="Contáctanos"
@@ -136,7 +127,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             />
           </div>
 
-          {/* Mobile Menu Toggle Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -147,7 +137,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-3 p-5 rounded-2xl bg-[#081022] border border-[#2A52BE]/50 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-3">
@@ -178,9 +167,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         )}
       </header>
 
-      {/* 2. MAIN HERO CENTER */}
-      <div className="relative z-20 flex-1 flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 py-8 sm:py-14 text-center max-w-5xl mx-auto w-full">
-        {/* Subtitle Badge */}
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 py-8 sm:py-14 text-center max-w-6xl mx-auto w-full">
         <FadeIn delay={0.05} y={20}>
           <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#101D42]/90 border border-[#2A52BE]/60 text-xs sm:text-sm tracking-widest uppercase text-[#93C5FD] mb-6 shadow-[0_0_30px_rgba(42,82,190,0.4)] backdrop-blur-md">
             <Sparkles className="w-4 h-4 text-[#60A5FA]" />
@@ -190,7 +177,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
           </div>
         </FadeIn>
 
-        {/* Hero Main Heading */}
         <FadeIn delay={0.1} y={30} className="w-full">
           <h1
             id="hero-heading"
@@ -201,14 +187,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
           </h1>
         </FadeIn>
 
-        {/* Rotating Stamp Motif in the Center with Custom Logo (usa logo-manca.svg por defecto) */}
         <FadeIn delay={0.15} y={20} duration={0.8} className="my-3 sm:my-5">
           <div className="relative inline-block hover:scale-105 transition-transform duration-300">
             <RotatingStampBadge size={130} customIconUrl={resolveImage(customIconUrl || customFooterLogoUrl, PLACEHOLDERS.logo)} />
           </div>
         </FadeIn>
 
-        {/* Hero Narrative Description */}
         <FadeIn delay={0.2} y={30} className="w-full max-w-3xl">
           <p className="text-base sm:text-lg md:text-xl text-[#CBD5E1] font-light leading-relaxed mb-8">
             {siteTexts.heroDescription ||
@@ -216,7 +200,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
           </p>
         </FadeIn>
 
-        {/* Primary Call to Action Buttons */}
         <FadeIn delay={0.25} y={20}>
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 justify-center">
             <ContactButton
@@ -237,7 +220,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         </FadeIn>
       </div>
 
-      {/* 3. HERO FOOTER: Clean centered scroll indicator */}
       <div className="relative z-20 w-full px-5 sm:px-8 md:px-12 pb-8 pt-4">
         <div className="max-w-6xl mx-auto grid items-center justify-center border-t border-[#2A52BE]/20 pt-6">
           <a

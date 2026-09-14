@@ -56,7 +56,6 @@ export const ServicesSection: React.FC = () => {
       className="relative w-full bg-white text-[#060A14] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-12 py-20 sm:py-28 md:py-32 pb-24 sm:pb-32 select-none shadow-[0_-20px_50px_rgba(0,0,0,0.5)]"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Section Tag */}
         <FadeIn delay={0} y={20} className="w-full text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2A52BE]/10 border border-[#2A52BE]/30 text-xs tracking-widest uppercase text-[#2A52BE] mb-4 font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
@@ -64,7 +63,6 @@ export const ServicesSection: React.FC = () => {
           </div>
         </FadeIn>
 
-        {/* Heading */}
         <FadeIn delay={0.05} y={40} className="w-full text-center">
           <h2
             id="services-heading"
@@ -79,7 +77,6 @@ export const ServicesSection: React.FC = () => {
           </p>
         </FadeIn>
 
-        {/* Services / Pillars List - With Strict Uniform Vertical Alignment */}
         <div className="flex flex-col border-t-2 border-[#060A14]/10">
           {pillarsData.map((item, index) => (
             <FadeIn
@@ -88,9 +85,7 @@ export const ServicesSection: React.FC = () => {
               y={30}
               className="group border-b border-[#060A14]/10 py-8 sm:py-12 md:py-14 transition-colors duration-300 hover:bg-[#F8FAFC] px-4 sm:px-8 rounded-2xl"
             >
-              {/* Structured Grid: Left number column (fixed 3 cols) & Right content column (9 cols) */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
-                {/* Left Column: Number & Badge */}
                 <div className="lg:col-span-3 flex lg:flex-col items-baseline lg:items-start justify-between lg:justify-start gap-3">
                   <div
                     className="font-black text-[#060A14] group-hover:text-[#2A52BE] transition-colors leading-none tracking-tighter"
@@ -105,7 +100,6 @@ export const ServicesSection: React.FC = () => {
                   )}
                 </div>
 
-                {/* Right Column: Title, Subtitle, Description - Starts on the EXACT same vertical line */}
                 <div className="lg:col-span-9 flex flex-col gap-2.5">
                   <h3
                     className="font-bold uppercase text-[#060A14] tracking-tight group-hover:text-[#2A52BE] transition-colors"

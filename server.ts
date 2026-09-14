@@ -7,17 +7,14 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Body parser with 50mb limit for image payloads
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-  // File paths for persistent storage in workspace
   const workspaceDataDir = path.join(process.cwd(), 'src', 'data');
   const workspaceDataFile = path.join(workspaceDataDir, 'siteContent.json');
   const distDataDir = path.join(process.cwd(), 'dist', 'data');
   const distDataFile = path.join(distDataDir, 'siteContent.json');
 
-  // Ensure directories exist
   try {
     if (!fs.existsSync(workspaceDataDir)) {
       fs.mkdirSync(workspaceDataDir, { recursive: true });
@@ -26,7 +23,6 @@ async function startServer() {
     console.warn('Could not create workspace data dir:', err);
   }
 
-  // CORS support for API requests
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -37,12 +33,20 @@ async function startServer() {
     next();
   });
 
-  // API Route: Health Check
+  app.post('/api/auth', (req, res) => {
+    const { username, password } = req.body;
+    const ADMIN_USER = 'admin';
+    const ADMIN_PASS = '@elmanca91218';
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      return res.json({ success: true });
+    }
+    return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+  });
+
   app.get(['/api/health', '/api/health.php'], (req, res) => {
     res.json({ status: 'ok', time: new Date().toISOString() });
   });
 
-  // API Route: Get Global Site Content (supports both /api/content and /api/content.php)
   app.get(['/api/content', '/api/content.php'], (req, res) => {
     try {
       if (fs.existsSync(workspaceDataFile)) {
@@ -60,7 +64,6 @@ async function startServer() {
     }
   });
 
-  // API Route: Save Global Site Content (supports both /api/content and /api/content.php)
   app.post(['/api/content', '/api/content.php'], (req, res) => {
     try {
       const payload = req.body;
@@ -70,7 +73,6 @@ async function startServer() {
 
       const contentString = JSON.stringify(payload, null, 2);
 
-      // Save to src/data/siteContent.json (Source of truth in workspace code)
       try {
         if (!fs.existsSync(workspaceDataDir)) {
           fs.mkdirSync(workspaceDataDir, { recursive: true });
@@ -80,7 +82,6 @@ async function startServer() {
         console.warn('Could not write to src/data/siteContent.json:', e);
       }
 
-      // Also save to dist/data/siteContent.json if in production
       try {
         if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
           if (!fs.existsSync(distDataDir)) {
@@ -109,7 +110,6 @@ async function startServer() {
     }
   });
 
-  // Uploads directory configuration
   const publicUploadsDir = path.join(process.cwd(), 'public', 'uploads');
   const distUploadsDir = path.join(process.cwd(), 'dist', 'uploads');
 
@@ -121,7 +121,6 @@ async function startServer() {
     console.warn('Could not create public/uploads:', err);
   }
 
-  // API Route: Image Upload (supports both /api/upload and /api/upload.php)
   app.post(['/api/upload', '/api/upload.php'], (req, res) => {
     try {
       const { image, name } = req.body;
@@ -147,7 +146,6 @@ async function startServer() {
 
       fs.writeFileSync(path.join(publicUploadsDir, filename), buffer);
 
-      // Also copy to dist/uploads if dist exists
       try {
         if (fs.existsSync(path.join(process.cwd(), 'dist'))) {
           if (!fs.existsSync(distUploadsDir)) {
@@ -172,7 +170,6 @@ async function startServer() {
     }
   });
 
-  // API Route: Galería de imágenes (list assets/img + uploads para el Admin)
   app.get(['/api/images', '/api/images.php'], (req, res) => {
     try {
       const sources = [
@@ -214,10 +211,8 @@ async function startServer() {
     }
   });
 
-  // Serve uploads statically
   app.use('/uploads', express.static(publicUploadsDir));
 
-  // Vite middleware for development
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
