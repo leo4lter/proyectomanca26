@@ -1,7 +1,37 @@
 {
+  "siteTexts": {
+    "heroSlogan": "#ConectandoPersonas",
+    "heroHeadline": "MANCA",
+    "heroSubheadline": "Productora Audiovisual & Agencia Digital 360",
+    "heroDescription": "Impulsamos la transformación digital y damos visibilidad a las historias de nuestra región. Streaming multicámara profesional, coberturas en directo de festivales masivos, contenidos comunitarios y desarrollo web llave en mano con hosting y soporte garantizado.",
+    "heroCtaButton": "Comenzar Proyecto",
+    "aboutBadge": "NUESTRA ESENCIA",
+    "aboutHeading": "NUESTRA ESENCIA",
+    "aboutBio": "Somos Manca, una productora audiovisual y una agencia digital integral arraigada en la comunidad. Nuestra esencia radica en ser un puente: por un lado, damos visibilidad a las historias, talentos y eventos locales; por el otro, impulsamos la transformación digital de los comercios y empresas de la región.",
+    "aboutCtaButton": "Conocer Más",
+    "servicesBadge": "NUESTROS PILARES FUNDAMENTALES",
+    "servicesHeading": "SERVICIOS",
+    "servicesSubtitle": "Impulsamos proyectos a través de la comunicación visual, el streaming en vivo y la tecnología digital.",
+    "canalTitle": "El Canal: @elmancasg",
+    "canalTagline": "Impacto Comunitario • Contenido Propio & Deportes",
+    "canalDescription": "Creamos contenido propio que le da voz a deportes, eventos y personas que normalmente no tienen visibilidad. Un compromiso social que inspira a los niños y jóvenes de Sierra Grande y la región como verdaderos referentes.",
+    "projectsBadge": "COBERTURAS, EL CANAL & TRANSFORMACIÓN DIGITAL",
+    "projectsHeading": "PROYECTOS",
+    "projectsSubtitle": "Transmisiones en vivo masivas, producciones de El Canal y plataformas digitales para el desarrollo de nuestra gente.",
+    "contactBadge": "#ConectandoPersonas • ESTAMOS A TU DISPOSICIÓN",
+    "contactHeading": "HABLEMOS DE TU PRÓXIMO PROYECTO",
+    "contactSubtitle": "Elegí el medio que te sea más cómodo: completá el formulario directo o escribinos a nuestro canal exclusivo de WhatsApp para una respuesta inmediata.",
+    "contactDescription": "Dejanos tu consulta mediante el formulario web o escribinos directamente por WhatsApp para recibir atención inmediata y asesoramiento personalizado.",
+    "contactPhone": "+54 9 2920 21-4741",
+    "contactEmail": "contacto@elmanca.com.ar",
+    "contactAddress": "Sierra Grande & Playas Doradas, Río Negro, Argentina",
+    "contactLocation": "Sierra Grande & Playas Doradas, Río Negro, Patagonia Argentina",
+    "contactSchedule": "Lunes a Sábado de 09:00 a 20:00 hs",
+    "contactWhatsAppText": "¡Hola Manca! Quisiera consultar por sus servicios de streaming y desarrollo web."
+  },
   "customIconUrl": "./assets/img/logo-manca.svg",
   "customFooterLogoUrl": "./assets/img/logo-footer.svg",
-  "lastAppliedTime": null,
+  "lastAppliedTime": "10:34:56 p. m.",
   "marqueeItems": [
     {
       "id": "m1",
@@ -271,29 +301,5 @@
       "duration": "Programa",
       "date": "Junio 2026"
     }
-  ],
-  "siteTexts": {
-    "heroSlogan": "#ConectandoPersonas",
-    "heroHeadline": "MANCA",
-    "heroSubheadline": "Productora Audiovisual & Agencia Digital 360",
-    "heroDescription": "Impulsamos la transformación digital y damos visibilidad a las historias de nuestra región. Streaming multicámara profesional, coberturas en directo de festivales masivos, contenidos comunitarios y desarrollo web llave en mano con hosting y soporte garantizado.",
-    "heroCtaButton": "Comenzar Proyecto",
-    "aboutBadge": "NUESTRA ESENCIA",
-    "aboutHeading": "NUESTRA ESENCIA",
-    "aboutBio": "Somos Manca, una productora audiovisual y una agencia digital integral arraigada en la comunidad. Nuestra esencia radica en ser un puente: por un lado, damos visibilidad a las historias, talentos y eventos locales; por el otro, impulsamos la transformación digital de los comercios y empresas de la región.",
-    "aboutCtaButton": "Conocer Más",
-    "servicesBadge": "NUESTROS PILARES FUNDAMENTALES",
-    "servicesHeading": "SERVICIOS",
-    "servicesSubtitle": "Impulsamos proyectos a través de la comunicación visual, el streaming en vivo y la tecnología digital.",
-    "canalTitle": "El Canal: @elmancasg",
-    "canalTagline": "Impacto Comunitario • Contenido Propio & Deportes",
-    "canalDescription": "Creamos contenido propio que le da voz a deportes, eventos y personas que normalmente no tienen visibilidad. Un compromiso social que inspira a los niños y jóvenes de Sierra Grande y la región como verdaderos referentes.",
-    "contactBadge": "#ConectandoPersonas • ESTAMOS A TU DISPOSICIÓN",
-    "contactHeading": "HABLEMOS DE TU PRÓXIMO PROYECTO",
-    "contactSubtitle": "Elegí el medio que te sea más cómodo: completá el formulario directo o escribinos a nuestro canal exclusivo de WhatsApp para una respuesta inmediata.",
-    "contactPhone": "+54 9 2920 21-4741",
-    "contactEmail": "contacto@elmanca.com.ar",
-    "contactAddress": "Sierra Grande & Playas Doradas, Río Negro, Argentina",
-    "contactWhatsAppText": "¡Hola Manca! Quisiera consultar por sus servicios de streaming y desarrollo web."
-  }
+  ]
 }
