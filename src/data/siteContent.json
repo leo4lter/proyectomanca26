@@ -63,44 +63,38 @@
   "brandLogos": [
     {
       "id": "b1",
-      "name": "Fiesta Nacional de Playas Doradas",
-      "logo": "./assets/img/placeholder-marca.svg",
-      "category": "Evento Oficial"
-    },
-    {
-      "id": "b2",
-      "name": "Radio Municipal Sierra Grande",
-      "logo": "./assets/img/placeholder-marca.svg",
-      "category": "Medio Aliado"
-    },
-    {
-      "id": "b3",
-      "name": "Municipalidad Sierra Grande",
-      "logo": "./assets/img/placeholder-marca.svg",
-      "category": "Institucional"
-    },
-    {
-      "id": "b4",
-      "name": "Club Atlético Comunitario",
-      "logo": "./assets/img/placeholder-marca.svg",
-      "category": "Deportes"
-    },
-    {
-      "id": "b5",
-      "name": "Comercio & Empresa Regional",
-      "logo": "./assets/img/placeholder-marca.svg",
+      "name": "Carnicería Chito",
+      "logo": "./assets/img/Marca-CarniceriaChito.png",
       "category": "Comercio Local"
     },
     {
-      "id": "b6",
-      "name": "Parador & Turismo Playas",
-      "logo": "./assets/img/placeholder-marca.svg",
-      "category": "Turismo"
+      "id": "b2",
+      "name": "Costumbres Argentinas",
+      "logo": "./assets/img/Marca-CostumbresArgentinas.png",
+      "category": "Comercio Local"
     },
     {
-      "id": "b7",
-      "name": "Distribuidora Costa Atlántica",
-      "logo": "./assets/img/placeholder-marca.svg",
+      "id": "b3",
+      "name": "Fátima",
+      "logo": "./assets/img/Marca-Fatima.png",
+      "category": "Sponsor Oficial"
+    },
+    {
+      "id": "b4",
+      "name": "La Favorita",
+      "logo": "./assets/img/Marca-LaFavorita.png",
+      "category": "Comercio Local"
+    },
+    {
+      "id": "b5",
+      "name": "Patagonia",
+      "logo": "./assets/img/Marca-Patagonia.png",
+      "category": "Sponsor Oficial"
+    },
+    {
+      "id": "b6",
+      "name": "Renacer",
+      "logo": "./assets/img/Marca-Renacer.png",
       "category": "Sponsor Oficial"
     }
   ],
