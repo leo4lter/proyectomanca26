@@ -21,6 +21,12 @@ import {
   Mail,
 } from 'lucide-react';
 
+const YoutubeIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+);
+
 export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
   onOpenContact,
 }) => {
@@ -91,6 +97,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
   const hasLiveUrl = (url?: string) => Boolean(url && url !== '#');
 
   const playasDoradasNights = festivalNights;
+  const latestVideo = channelVideos.length > 0 ? channelVideos[0] : null;
 
   return (
     <section
@@ -310,7 +317,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600/20 border border-red-500/40 text-red-400 text-xs font-semibold uppercase tracking-wider hover:bg-red-600 hover:text-white transition-colors"
               >
-                <Youtube className="w-4 h-4 text-red-500" />
+                <YoutubeIcon className="w-4 h-4 text-red-500" />
                 <span>@elmancasg</span>
               </a>
 
@@ -340,8 +347,8 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
             <div className={`proj-content pt-6 mt-6 border-t border-[#2A52BE]/30 ${openProject === '02' ? '' : 'pointer-events-none'}`} style={openProject === '02' ? undefined : {visibility: 'hidden' as const}}>
               <div className="mb-6 p-4 sm:p-6 rounded-2xl bg-[#091122] border border-red-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-[0_10px_30px_rgba(239,68,68,0.12)]">
                 <div className="flex items-center gap-3.5 sm:gap-4">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg shrink-0">
-                    <Youtube className="w-7 h-7 fill-white" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FF0000] flex items-center justify-center shadow-lg shrink-0 overflow-hidden">
+                    <YoutubeIcon className="w-7 h-7 sm:w-8 sm:h-8" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -366,9 +373,9 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
                     href="https://www.youtube.com/@elmancasg?sub_confirmation=1"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
+                    className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#FF0000] hover:bg-[#CC0000] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
                   >
-                    <Youtube className="w-4 h-4 fill-white" />
+                    <YoutubeIcon className="w-4 h-4" />
                     <span>Suscribirse</span>
                   </a>
                   <a
@@ -388,23 +395,55 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
               </p>
 
               <div className="mb-8 p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-[#081022] border border-[#2A52BE]/30 shadow-[0_15px_40px_rgba(0,0,0,0.45)]">
-                <div className="flex items-center gap-2.5 mb-3.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-                  <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-white">
-                    MIRA NUESTROS ÚLTIMOS VIDEOS
-                  </h4>
+                <div className="flex items-center justify-between gap-2.5 mb-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
+                    <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-white">
+                      ÚLTIMO VIDEO SUBIDO
+                    </h4>
+                  </div>
+                  {latestVideo && (
+                    <span className="text-[10px] text-[#93C5FD] font-semibold uppercase tracking-wider hidden sm:block">
+                      {latestVideo.date} • {latestVideo.views}
+                    </span>
+                  )}
                 </div>
 
                 <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
-                  <iframe
-                    src="https://www.youtube.com/embed?listType=user_uploads&list=UC3woFJgJr1F8-55tU9Bxz3Q"
-                    title="MIRA NUESTROS ÚLTIMOS VIDEOS - El Manca SG"
-                    className="absolute inset-0 w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  />
+                  {latestVideo ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${latestVideo.youtubeId}?rel=0`}
+                      title={latestVideo.title}
+                      className="absolute inset-0 w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
+                      <YoutubeIcon className="w-12 h-12 text-red-500/50" />
+                      <span className="text-sm text-[#94A3B8] font-light">No hay videos disponibles</span>
+                    </div>
+                  )}
                 </div>
+
+                {latestVideo && (
+                  <div className="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                    <h5 className="text-xs sm:text-sm font-bold text-white uppercase tracking-tight line-clamp-1">
+                      {latestVideo.title}
+                    </h5>
+                    <a
+                      href={`https://www.youtube.com/watch?v=${latestVideo.youtubeId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/20 hover:bg-red-600 border border-red-500/40 text-red-400 hover:text-white text-[11px] font-bold uppercase tracking-wider transition-colors shrink-0 cursor-pointer"
+                    >
+                      <YoutubeIcon />
+                      <span>Ver en YouTube</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
@@ -488,7 +527,7 @@ export const ProjectsSection: React.FC<{ onOpenContact?: () => void }> = ({
 
               <div className="p-4 rounded-xl bg-[#091122] border border-[#2A52BE]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#CBD5E1]">
                 <div className="flex items-center gap-2 text-center sm:text-left">
-                  <Youtube className="w-4 h-4 text-red-500 shrink-0" />
+                  <YoutubeIcon className="w-4 h-4 text-red-500 shrink-0" />
                   <span>Explorá todas las transmisiones, coberturas completas y entrevistas en nuestro canal oficial.</span>
                 </div>
                 <a
