@@ -31,20 +31,20 @@
   },
   "customIconUrl": "./assets/img/logo-manca.svg",
   "customFooterLogoUrl": "./assets/img/logo-footer.svg",
-  "lastAppliedTime": "09:57:45 a. m.",
+  "lastAppliedTime": "10:04:34 a. m.",
   "marqueeItems": [
     {
       "id": "m1",
       "title": "Fiesta Nacional de Playas Doradas 2026",
       "category": "Streaming de Gran Escala",
-      "image": "./assets/img/placeholder-galeria.svg",
+      "image": "https://elmanca.com.ar/uploads/manca_1789477254_212.png",
       "tag": "Noches en Vivo 1, 2 y 3"
     },
     {
       "id": "m2",
       "title": "Transmisión Multicámara en Directo",
       "category": "Producción & Broadcast",
-      "image": "./assets/img/placeholder-galeria.svg",
+      "image": "https://elmanca.com.ar/uploads/manca_1789477278_718.jpg",
       "tag": "Calidad Broadcast HD"
     },
     {
@@ -58,7 +58,7 @@
       "id": "m4",
       "title": "El Canal: Deportes Locales @elmancasg",
       "category": "Impacto Comunitario",
-      "image": "./assets/img/placeholder-galeria.svg",
+      "image": "https://elmanca.com.ar/uploads/manca_1789477472_948.png",
       "tag": "Visibilidad a Jóvenes Talentos"
     },
     {
@@ -79,14 +79,14 @@
       "id": "m7",
       "title": "Historias que Inspiran a Nuestra Comunidad",
       "category": "El Canal Comunitario",
-      "image": "./assets/img/placeholder-galeria.svg",
+      "image": "https://elmanca.com.ar/uploads/manca_1789477460_479.png",
       "tag": "Referentes para Niños & Jóvenes"
     },
     {
       "id": "m8",
       "title": "Planes de Sponsor & Banners en Pantalla",
       "category": "Patrocinio en Video",
-      "image": "./assets/img/placeholder-galeria.svg",
+      "image": "https://elmanca.com.ar/uploads/manca_1789477486_269.png",
       "tag": "Menciones & Presencia de Marca"
     }
   ],
