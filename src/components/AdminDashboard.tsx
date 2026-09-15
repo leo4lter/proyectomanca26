@@ -19,6 +19,7 @@ export const AdminDashboard: React.FC = () => {
     addMarqueeItem,
     deleteMarqueeItem,
     brandLogos,
+    setBrandLogos,
     addBrandLogo,
     deleteBrandLogo,
     webProjects,
@@ -138,6 +139,14 @@ export const AdminDashboard: React.FC = () => {
     }
     if (pickerTarget === 'brand-new') {
       setNewBrand({ ...newBrand, logo: value });
+      return;
+    }
+    if (pickerTarget.startsWith('brand-')) {
+      setBrandLogos((prev) =>
+        prev.map((b) =>
+          b.id === pickerTarget.replace('brand-', '') ? { ...b, logo: value } : b
+        )
+      );
       return;
     }
     if (pickerTarget === 'web-new') {
@@ -1079,32 +1088,104 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {brandLogos.map((brand) => (
                   <div
                     key={brand.id}
-                    className="group relative p-5 rounded-2xl bg-[#060D1E] border border-[#2A52BE]/30 flex flex-col items-center text-center justify-between transition-all hover:border-[#2A52BE]"
+                    className="group relative p-5 rounded-2xl bg-[#060D1E] border border-[#2A52BE]/30 flex flex-col gap-3 transition-all hover:border-[#2A52BE]"
                   >
-                    <div className="w-full h-20 flex items-center justify-center mb-2">
+                    <div className="relative w-full h-24 flex items-center justify-center rounded-xl overflow-hidden bg-[#040813] border border-[#2A52BE]/40">
                       <img
                         src={brand.logo}
                         alt={brand.name}
-                        className="max-h-14 max-w-[120px] object-contain filter grayscale opacity-60 group-hover:filter-none group-hover:opacity-100 group-hover:scale-105 transition-all"
+                        className="max-h-16 max-w-[130px] object-contain filter grayscale opacity-60 group-hover:filter-none group-hover:opacity-100 transition-all"
                       />
+                      <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
+                        <Upload className="w-4 h-4 text-white mr-1" />
+                        <span className="text-xs text-white uppercase font-bold">Reemplazar</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) =>
+                            handleFileUpload(e, (dataUrl) =>
+                              setBrandLogos((prev) =>
+                                prev.map((b) => (b.id === brand.id ? { ...b, logo: dataUrl } : b))
+                              )
+                            )
+                          }
+                        />
+                      </label>
                     </div>
-                    <span className="text-xs font-bold text-white truncate w-full">
-                      {brand.name}
-                    </span>
-                    <span className="text-[10px] text-[#93C5FD] truncate">{brand.category}</span>
 
-                    <button
-                      type="button"
-                      onClick={() => deleteBrandLogo(brand.id)}
-                      className="absolute top-2 right-2 p-1.5 rounded-md bg-red-500/20 text-red-300 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                      title="Eliminar marca"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={brand.name}
+                        onChange={(e) =>
+                          setBrandLogos((prev) =>
+                            prev.map((b) => (b.id === brand.id ? { ...b, name: e.target.value } : b))
+                          )
+                        }
+                        className="w-full bg-[#040813] border border-[#2A52BE]/40 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#3870E0]"
+                        placeholder="Nombre de la marca"
+                      />
+                      <input
+                        type="text"
+                        value={brand.category || ''}
+                        onChange={(e) =>
+                          setBrandLogos((prev) =>
+                            prev.map((b) => (b.id === brand.id ? { ...b, category: e.target.value } : b))
+                          )
+                        }
+                        className="w-full bg-[#040813] border border-[#2A52BE]/40 rounded-lg px-3 py-1.5 text-xs text-[#93C5FD] focus:outline-none focus:border-[#3870E0]"
+                        placeholder="Categoría"
+                      />
+                      <div className="flex gap-1.5">
+                        <input
+                          type="url"
+                          value={brand.logo}
+                          onChange={(e) =>
+                            setBrandLogos((prev) =>
+                              prev.map((b) => (b.id === brand.id ? { ...b, logo: e.target.value } : b))
+                            )
+                          }
+                          className="flex-1 bg-[#040813] border border-[#2A52BE]/40 rounded-lg px-2.5 py-1.5 text-[10px] text-white focus:outline-none focus:border-[#3870E0] truncate"
+                          placeholder="URL del logo"
+                        />
+                        <label className="p-1.5 rounded-lg bg-[#14234C] text-[#93C5FD] hover:text-white cursor-pointer transition-colors shrink-0" title="Subir logo">
+                          <Upload className="w-3.5 h-3.5" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) =>
+                              handleFileUpload(e, (dataUrl) =>
+                                setBrandLogos((prev) =>
+                                  prev.map((b) => (b.id === brand.id ? { ...b, logo: dataUrl } : b))
+                                )
+                              )
+                            }
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => openImagePicker(`brand-${brand.id}`)}
+                          className="p-1.5 rounded-lg bg-[#14234C] text-[#93C5FD] hover:text-white cursor-pointer transition-colors shrink-0"
+                          title="Elegir de la galería"
+                        >
+                          <ImageIcon className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteBrandLogo(brand.id)}
+                          className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer shrink-0"
+                          title="Eliminar marca"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

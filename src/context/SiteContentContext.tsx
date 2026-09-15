@@ -217,10 +217,14 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
   });
 
   const [brandLogos, setBrandLogosState] = useState<BrandItem[]>(() => {
-    return getNormalizedStorage<BrandItem[]>(
-      'manca_brand_logos',
-      (initialSiteData?.brandLogos as BrandItem[]) || defaultBrandLogos
-    );
+    const saved = getNormalizedStorage<BrandItem[] | null>('manca_brand_logos', null);
+    const defaults = (initialSiteData?.brandLogos as BrandItem[]) || defaultBrandLogos;
+    if (saved && Array.isArray(saved) && saved.length > 0) {
+      const hasPlaceholder = saved.some((b) => b.logo?.includes('placeholder-marca'));
+      if (!hasPlaceholder) return saved;
+    }
+    safeStorage.set('manca_brand_logos', defaults);
+    return defaults;
   });
 
   const [webProjects, setWebProjectsState] = useState<WebProjectItem[]>(() => {
