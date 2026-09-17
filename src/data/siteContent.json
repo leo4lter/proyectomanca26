@@ -31,7 +31,7 @@
   },
   "customIconUrl": "./assets/img/logo-manca.svg",
   "customFooterLogoUrl": "./assets/img/logo-footer.svg",
-  "lastAppliedTime": "12:53:59 p. m.",
+  "lastAppliedTime": "12:54:13 p. m.",
   "marqueeItems": [
     {
       "id": "m1",
@@ -90,7 +90,14 @@
       "tag": "Menciones & Presencia de Marca"
     }
   ],
-  "brandLogos": [],
+  "brandLogos": [
+    {
+      "name": "Renacer",
+      "logo": "https://elmanca.com.ar/uploads/manca_1789660469_630.png",
+      "category": "Comercio Local",
+      "id": "b_1789660451771"
+    }
+  ],
   "webProjects": [
     {
       "id": "w1",
