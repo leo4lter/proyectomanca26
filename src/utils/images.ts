@@ -37,11 +37,14 @@ export const WEB_PLACEHOLDERS: string[] = Array.from(
   () => PLACEHOLDERS.web,
 );
 
-export function resolveImage(src: string | null | undefined, fallback: string): string {
-  if (!src || (typeof src === 'string' && src.trim() === '')) return fallback;
-  return src;
-}
-
 export function isRemoteUrl(src: string): boolean {
   return /^(https?:)?\/\//i.test(src) || src.startsWith('data:') || src.startsWith('blob:');
+}
+
+export function resolveImage(src: string | null | undefined, fallback: string): string {
+  if (!src || (typeof src === 'string' && src.trim() === '')) return fallback;
+  if (isRemoteUrl(src)) return src;
+  if (src.startsWith('./')) return `${base}${src.slice(2)}`;
+  if (src.startsWith('/')) return src;
+  return src;
 }

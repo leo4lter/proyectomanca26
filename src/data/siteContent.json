@@ -92,16 +92,40 @@
   ],
   "brandLogos": [
     {
-      "name": "Renacer",
-      "logo": "https://elmanca.com.ar/uploads/manca_1789477623_604.png",
-      "category": "Sponsor",
-      "id": "b_1789477614274"
+      "id": "b1",
+      "name": "Carnicería Chito",
+      "logo": "./assets/img/Marca-CarniceriaChito.png",
+      "category": "Comercio Local"
     },
     {
+      "id": "b2",
+      "name": "Costumbres Argentinas",
+      "logo": "./assets/img/Marca-CostumbresArgentinas.png",
+      "category": "Comercio Local"
+    },
+    {
+      "id": "b3",
+      "name": "Fátima",
+      "logo": "./assets/img/Marca-Fatima.png",
+      "category": "Sponsor Oficial"
+    },
+    {
+      "id": "b4",
+      "name": "La Favorita",
+      "logo": "./assets/img/Marca-LaFavorita.png",
+      "category": "Comercio Local"
+    },
+    {
+      "id": "b5",
+      "name": "Patagonia",
+      "logo": "./assets/img/Marca-Patagonia.png",
+      "category": "Sponsor Oficial"
+    },
+    {
+      "id": "b6",
       "name": "Renacer",
       "logo": "./assets/img/Marca-Renacer.png",
-      "category": "Sponsor",
-      "id": "b_1789477632644"
+      "category": "Sponsor Oficial"
     }
   ],
   "webProjects": [

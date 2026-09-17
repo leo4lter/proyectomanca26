@@ -221,7 +221,10 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const defaults = (initialSiteData?.brandLogos as BrandItem[]) || defaultBrandLogos;
     if (saved && Array.isArray(saved) && saved.length > 0) {
       const hasPlaceholder = saved.some((b) => b.logo?.includes('placeholder-marca'));
-      if (!hasPlaceholder) return saved;
+      const hasRemoteUpload = saved.some((b) => b.logo?.includes('elmanca.com.ar/uploads/'));
+      const defaultNames = defaults.map((b) => b.name);
+      const hasAnyDefault = saved.some((b) => defaultNames.includes(b.name));
+      if (!hasPlaceholder && !hasRemoteUpload && hasAnyDefault) return saved;
     }
     safeStorage.set('manca_brand_logos', defaults);
     return defaults;
