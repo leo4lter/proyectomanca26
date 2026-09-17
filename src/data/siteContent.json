@@ -31,7 +31,7 @@
   },
   "customIconUrl": "./assets/img/logo-manca.svg",
   "customFooterLogoUrl": "./assets/img/logo-footer.svg",
-  "lastAppliedTime": "12:54:13 p. m.",
+  "lastAppliedTime": "12:56:11 p. m.",
   "marqueeItems": [
     {
       "id": "m1",
@@ -93,9 +93,39 @@
   "brandLogos": [
     {
       "name": "Renacer",
-      "logo": "https://elmanca.com.ar/uploads/manca_1789660469_630.png",
-      "category": "Comercio Local",
+      "logo": "./assets/img/Marca-Renacer.png",
+      "category": "Empresa Local",
       "id": "b_1789660451771"
+    },
+    {
+      "name": "Carnicería Chito",
+      "logo": "./assets/img/Marca-CarniceriaChito.png",
+      "category": "Comercio Local",
+      "id": "b_1789660511104"
+    },
+    {
+      "name": "Costumbres Argentinas",
+      "logo": "./assets/img/Marca-CostumbresArgentinas.png",
+      "category": "Comercio Local",
+      "id": "b_1789660534921"
+    },
+    {
+      "name": "Patagonia Supermercado",
+      "logo": "./assets/img/Marca-Patagonia.png",
+      "category": "Comercio Local",
+      "id": "b_1789660547961"
+    },
+    {
+      "name": "Fátima Maldonado",
+      "logo": "./assets/img/Marca-Fatima.png",
+      "category": "Sponsor",
+      "id": "b_1789660561054"
+    },
+    {
+      "name": "La Favorita ",
+      "logo": "./assets/img/Marca-LaFavorita.png",
+      "category": "Comercio Local",
+      "id": "b_1789660569481"
     }
   ],
   "webProjects": [
