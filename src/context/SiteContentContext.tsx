@@ -365,16 +365,20 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     const fetchContent = async () => {
-      try {
-        const res = await fetch('/api/content');
-        if (res.ok) {
-          const data = await res.json();
-          if (data) {
-            applyIncomingData(data);
-            return;
+      const cleanHostinger = hostingerUrl?.trim().replace(/\/+$/, '');
+      if (cleanHostinger) {
+        try {
+          const hRes = await fetch(`${cleanHostinger}/api/content.php`, { mode: 'cors' });
+          if (hRes.ok) {
+            const hData = await hRes.json();
+            if (hData && !hData.error && (hData.marqueeItems || hData.brandLogos || hData.customIconUrl)) {
+              applyIncomingData(hData);
+              setIsHostingerConnected(true);
+              return;
+            }
           }
+        } catch (e) {
         }
-      } catch (err) {
       }
 
       try {
@@ -389,19 +393,13 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       } catch (e) {
       }
 
-      const cleanHostinger = hostingerUrl?.trim().replace(/\/+$/, '');
-      if (cleanHostinger) {
-        try {
-          const hRes = await fetch(`${cleanHostinger}/api/content.php`, { mode: 'cors' });
-          if (hRes.ok) {
-            const hData = await hRes.json();
-            if (hData && !hData.error && (hData.marqueeItems || hData.brandLogos || hData.customIconUrl)) {
-              applyIncomingData(hData);
-              setIsHostingerConnected(true);
-            }
-          }
-        } catch (e) {
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const data = await res.json();
+          if (data) applyIncomingData(data);
         }
+      } catch (err) {
       }
     };
 
