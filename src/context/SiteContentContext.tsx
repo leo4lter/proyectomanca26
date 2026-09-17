@@ -222,9 +222,7 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if (saved && Array.isArray(saved) && saved.length > 0) {
       const hasPlaceholder = saved.some((b) => b.logo?.includes('placeholder-marca'));
       const hasRemoteUpload = saved.some((b) => b.logo?.includes('elmanca.com.ar/uploads/'));
-      const defaultNames = defaults.map((b) => b.name);
-      const hasAnyDefault = saved.some((b) => defaultNames.includes(b.name));
-      if (!hasPlaceholder && !hasRemoteUpload && hasAnyDefault) return saved;
+      if (!hasPlaceholder && !hasRemoteUpload) return saved;
     }
     safeStorage.set('manca_brand_logos', defaults);
     return defaults;
@@ -341,8 +339,12 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
         safeStorage.set('manca_marquee_items', normalizedData.marqueeItems);
       }
       if (Array.isArray(normalizedData.brandLogos) && normalizedData.brandLogos.length > 0) {
-        setBrandLogosState(normalizedData.brandLogos);
-        safeStorage.set('manca_brand_logos', normalizedData.brandLogos);
+        const hasPlaceholder = normalizedData.brandLogos.some((b: BrandItem) => b.logo?.includes('placeholder-marca'));
+        const hasRemoteUpload = normalizedData.brandLogos.some((b: BrandItem) => b.logo?.includes('elmanca.com.ar/uploads/'));
+        if (!hasPlaceholder && !hasRemoteUpload) {
+          setBrandLogosState(normalizedData.brandLogos);
+          safeStorage.set('manca_brand_logos', normalizedData.brandLogos);
+        }
       }
       if (Array.isArray(normalizedData.webProjects) && normalizedData.webProjects.length > 0) {
         setWebProjectsState(normalizedData.webProjects);
@@ -363,20 +365,16 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     const fetchContent = async () => {
-      const cleanHostinger = hostingerUrl?.trim().replace(/\/+$/, '');
-      if (cleanHostinger) {
-        try {
-          const hRes = await fetch(`${cleanHostinger}/api/content.php`, { mode: 'cors' });
-          if (hRes.ok) {
-            const hData = await hRes.json();
-            if (hData && !hData.error && (hData.marqueeItems || hData.brandLogos || hData.customIconUrl)) {
-              applyIncomingData(hData);
-              setIsHostingerConnected(true);
-              return;
-            }
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const data = await res.json();
+          if (data) {
+            applyIncomingData(data);
+            return;
           }
-        } catch (e) {
         }
+      } catch (err) {
       }
 
       try {
@@ -391,20 +389,30 @@ export const SiteContentProvider: React.FC<{ children: React.ReactNode }> = ({ c
       } catch (e) {
       }
 
-      try {
-        const res = await fetch('/api/content');
-        if (res.ok) {
-          const data = await res.json();
-          if (data) applyIncomingData(data);
+      const cleanHostinger = hostingerUrl?.trim().replace(/\/+$/, '');
+      if (cleanHostinger) {
+        try {
+          const hRes = await fetch(`${cleanHostinger}/api/content.php`, { mode: 'cors' });
+          if (hRes.ok) {
+            const hData = await hRes.json();
+            if (hData && !hData.error && (hData.marqueeItems || hData.brandLogos || hData.customIconUrl)) {
+              applyIncomingData(hData);
+              setIsHostingerConnected(true);
+            }
+          }
+        } catch (e) {
         }
-      } catch (err) {
       }
     };
 
     fetchContent();
 
+    const handleContentApplied = () => fetchContent();
+    window.addEventListener('manca_content_applied', handleContentApplied);
+
     return () => {
       isMounted = false;
+      window.removeEventListener('manca_content_applied', handleContentApplied);
     };
   }, [hostingerUrl]);
 
